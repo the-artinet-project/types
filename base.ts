@@ -1,0 +1,23 @@
+import z from "zod";
+
+export const BaseSchema = z.object({
+  id: z.string(),
+});
+export type Base = z.infer<typeof BaseSchema>;
+
+export const RemoteServerSchema = BaseSchema.extend({
+  url: z.string().url(),
+});
+export type RemoteServer = z.infer<typeof RemoteServerSchema>;
+
+export const WithKindSchema = z.object({
+  kind: z.string(),
+});
+export type WithKind = z.infer<typeof WithKindSchema>;
+
+const literalSchema = z.union([z.string(), z.number(), z.boolean(), z.null()]);
+type Literal = z.infer<typeof literalSchema>;
+type JSON = Literal | { [key: string]: JSON } | JSON[];
+export const JSONSchema: z.ZodType<JSON> = z.lazy(() =>
+  z.union([literalSchema, z.array(JSONSchema), z.record(JSONSchema)])
+);

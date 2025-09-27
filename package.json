@@ -1,0 +1,33 @@
+{
+  "name": "@artinet/types",
+  "author": "artinet",
+  "license": "GPL-3.0",
+  "description": "Types for the artinet platform",
+  "files": [
+    "index.js",
+    "index.d.ts"
+  ],
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js"
+    }
+  },
+  "dependencies": {
+    "zod": "latest"
+  },
+  "peerDependencies": {
+    "@artinet/sdk": "^0.5.7",
+    "@modelcontextprotocol/sdk": "^1.17.5"
+  },
+  "devDependencies": {
+    "typescript": "latest"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
