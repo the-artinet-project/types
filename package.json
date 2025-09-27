@@ -4,17 +4,20 @@
   "license": "GPL-3.0",
   "description": "Types for the artinet platform",
   "files": [
-    "index.js",
-    "index.d.ts"
+    "dist"
   ],
   "version": "0.0.1",
   "type": "module",
-  "main": "./index.js",
-  "types": "./index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "postinstall": "npm run build",
+    "build": "tsc"
+  },
   "exports": {
     ".": {
-      "types": "./index.d.ts",
-      "import": "./index.js"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
     }
   },
   "dependencies": {
