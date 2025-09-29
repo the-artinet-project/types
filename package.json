@@ -7,7 +7,9 @@
     "dist",
     "tsconfig.json",
     "package.json",
-    "LICENSE"
+    "LICENSE",
+    "*.ts",
+    "api/**/*.ts"
   ],
   "version": "0.0.1",
   "type": "module",
