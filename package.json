@@ -2,14 +2,18 @@
   "name": "@artinet/types",
   "author": "artinet",
   "license": "GPL-3.0",
-  "description": "Types for the artinet platform",
+  "description": "Useful types for the artinet agent system.",
+  "keywords": [
+    "artinet",
+    "agent",
+    "artificial intelligence",
+    "ai",
+    "types"
+  ],
   "files": [
     "dist",
-    "tsconfig.json",
     "package.json",
-    "LICENSE",
-    "*.ts",
-    "api/**/*.ts"
+    "LICENSE"
   ],
   "version": "0.0.1",
   "type": "module",

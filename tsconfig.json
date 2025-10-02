@@ -5,6 +5,7 @@
     "moduleResolution": "NodeNext",
     "declaration": true,
     "declarationMap": true,
+    "declarationDir": "./dist",
     "outDir": "./dist",
     "rootDir": "./",
     "strict": true,
