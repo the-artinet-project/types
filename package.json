@@ -2,13 +2,14 @@
   "name": "@artinet/types",
   "author": "artinet",
   "license": "GPL-3.0",
-  "description": "Useful types for the artinet agent system.",
+  "description": "A collection of useful types for the artinet.",
   "keywords": [
     "artinet",
     "agent",
     "artificial intelligence",
     "ai",
-    "types"
+    "types",
+    "ai agent"
   ],
   "files": [
     "dist",
@@ -20,7 +21,6 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "postinstall": "npm run build",
     "build": "tsc --project tsconfig.json"
   },
   "exports": {

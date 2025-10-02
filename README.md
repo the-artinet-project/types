@@ -1,6 +1,6 @@
 # @artinet/types
 
-TypeScript types for the artinet agent system.
+A collection of useful types for the artinet.
 
 ## Installation
 
