@@ -1,8 +1,10 @@
 {
   "name": "@artinet/types",
+  "version": "0.0.4",
   "author": "artinet",
   "license": "Apache-2.0",
   "description": "A collection of useful types for the artinet.",
+  "homepage": "https://artinet.io",
   "keywords": [
     "artinet",
     "agent",
@@ -16,7 +18,6 @@
     "package.json",
     "LICENSE"
   ],
-  "homepage": "https://artinet.io",
   "bugs": {
     "url": "https://github.com/the-artinet-project/types/issues"
   },
@@ -24,7 +25,6 @@
     "type": "git",
     "url": "https://github.com/the-artinet-project/types"
   },
-  "version": "0.0.2",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -38,7 +38,7 @@
     }
   },
   "dependencies": {
-    "zod": "latest",
+    "zod": "^3.23.8",
     "@artinet/sdk": "^0.5.7",
     "@modelcontextprotocol/sdk": "^1.19.1"
   },
