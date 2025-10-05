@@ -1,7 +1,7 @@
 {
   "name": "@artinet/types",
   "author": "artinet",
-  "license": "GPL-3.0",
+  "license": "Apache-2.0",
   "description": "A collection of useful types for the artinet.",
   "keywords": [
     "artinet",
@@ -16,7 +16,7 @@
     "package.json",
     "LICENSE"
   ],
-  "homepage": "https://github.com/the-artinet-project/artinet-sdk",
+  "homepage": "https://artinet.io",
   "bugs": {
     "url": "https://github.com/the-artinet-project/types/issues"
   },

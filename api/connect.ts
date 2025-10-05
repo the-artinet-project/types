@@ -10,7 +10,7 @@ export const ConnectRequestSchema = z.object({
   identifier: z.string(),
   session: SessionSchema,
   preferredEndpoint: z.string(),
-  options: ConnectOptionsSchema,
+  options: ConnectOptionsSchema.optional(),
 });
 export type ConnectRequest = z.infer<typeof ConnectRequestSchema>;
 

@@ -16,4 +16,4 @@ import { ArtinetAgent, AgentRequest, AgentResponse } from "@artinet/types";
 
 ## License
 
-GPL-3.0
+Apache-2.0
