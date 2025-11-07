@@ -16,7 +16,6 @@
     "noFallthroughCasesInSwitch": true,
     "lib": ["ES2022", "DOM"],
     "strict": true,
-    "skipLibCheck": true,
     "outDir": "./dist",
     "rootDir": "./",
     "isolatedModules": true,
