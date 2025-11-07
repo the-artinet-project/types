@@ -1,5 +1,10 @@
 import z from "zod";
-import { BaseSchema, RemoteServerSchema, WithKindSchema } from "./base.js";
+import {
+  BaseSchema,
+  CallerIdSchema,
+  RemoteServerSchema,
+  WithKindSchema,
+} from "./base.js";
 
 export const ArtinetAgentSchema = BaseSchema.partial({
   id: true,
@@ -28,6 +33,7 @@ export const AgentServerSchema = z.union([
 export type AgentServer = z.infer<typeof AgentServerSchema>;
 
 export const AgentRequestSchema = AgentCallSchema.extend(WithKindSchema.shape)
+  .extend(CallerIdSchema.shape)
   .extend({
     kind: z.literal("agent_request").default("agent_request"),
   })
@@ -39,6 +45,7 @@ export type AgentRequest = z.infer<typeof AgentRequestSchema>;
 export const AgentResponseSchema = AgentCallResultSchema.extend(
   WithKindSchema.shape
 )
+  .extend(CallerIdSchema.shape)
   .extend({
     kind: z.literal("agent_response").default("agent_response"),
   })

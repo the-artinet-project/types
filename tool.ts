@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { BaseSchema, WithKindSchema } from "./base.js";
+import { BaseSchema, CallerIdSchema, WithKindSchema } from "./base.js";
 import {
   ImplementationSchema,
   ResourceSchema,
@@ -23,6 +23,7 @@ export const ToolInfoSchema = BaseSchema.partial({
 export type ToolInfo = z.infer<typeof ToolInfoSchema>;
 
 export const ToolRequestSchema = BaseSchema.extend(WithKindSchema.shape)
+  .extend(CallerIdSchema.shape)
   .extend({
     kind: z.literal("tool_request").default("tool_request"),
     callToolRequest: CallToolRequestSchema,
@@ -33,6 +34,7 @@ export const ToolRequestSchema = BaseSchema.extend(WithKindSchema.shape)
 export type ToolRequest = z.infer<typeof ToolRequestSchema>;
 
 export const ToolResponseSchema = BaseSchema.extend(WithKindSchema.shape)
+  .extend(CallerIdSchema.shape)
   .extend({
     kind: z.literal("tool_response").default("tool_response"),
     name: z.string(),
