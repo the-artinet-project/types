@@ -1,3 +1,7 @@
+/**
+ * Copyright 2025 The Artinet Project
+ * SPDX-License-Identifier: Apache-2.0
+ */
 import z from "zod";
 import { ToolServerSchema, AgentServerSchema } from "../configs/server.js";
 import {

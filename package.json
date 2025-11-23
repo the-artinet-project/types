@@ -1,6 +1,6 @@
 {
   "name": "@artinet/types",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "author": "artinet",
   "license": "Apache-2.0",
   "description": "A collection of useful types for the artinet.",
@@ -10,8 +10,7 @@
     "agent",
     "artificial intelligence",
     "ai",
-    "types",
-    "ai agent"
+    "types"
   ],
   "files": [
     "dist",

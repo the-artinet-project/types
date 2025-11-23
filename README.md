@@ -11,7 +11,7 @@ npm install @artinet/types
 ## Usage
 
 ```typescript
-import { ArtinetAgent, AgentRequest, AgentResponse } from "@artinet/types";
+import { AgentCall, AgentRequest, AgentResponse } from "@artinet/types";
 ```
 
 ## License
