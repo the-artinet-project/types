@@ -1,36 +1,19 @@
 import z from "zod";
-import {
-  BaseSchema,
-  CallerIdSchema,
-  RemoteServerSchema,
-  WithKindSchema,
-} from "./base.js";
+import { CallerIdSchema, WithKindSchema } from "../../base.js";
+import { LocalAgentSchema } from "../server.js";
 
-export const ArtinetAgentSchema = BaseSchema.partial({
+export const AgentCallSchema = LocalAgentSchema.partial({
+  type: true,
   id: true,
 }).extend({
-  uri: z.string(),
-});
-export type ArtinetAgent = z.infer<typeof ArtinetAgentSchema>;
-
-export const AgentCallSchema = ArtinetAgentSchema.extend({
-  directive: z.string(),
+  directive: z.string().describe("The directive to be used to call the agent."),
 });
 export type AgentCall = z.infer<typeof AgentCallSchema>;
 
 export const AgentCallResultSchema = AgentCallSchema.extend({
-  result: z.string(),
+  result: z.string().describe("The result of the agent call."),
 });
 export type AgentCallResult = z.infer<typeof AgentCallResultSchema>;
-
-export const RemoteAgentSchema = RemoteServerSchema;
-export type RemoteAgent = z.infer<typeof RemoteAgentSchema>;
-
-export const AgentServerSchema = z.union([
-  ArtinetAgentSchema,
-  RemoteAgentSchema,
-]);
-export type AgentServer = z.infer<typeof AgentServerSchema>;
 
 export const AgentRequestSchema = AgentCallSchema.extend(WithKindSchema.shape)
   .extend(CallerIdSchema.shape)

@@ -21,6 +21,11 @@
     "isolatedModules": true,
     "baseUrl": "."
   },
-  "include": ["*.ts", "api/**/*.ts"],
+  "include": [
+    "*.ts",
+    "api/**/*.ts",
+    "configs/requests/agent.ts",
+    "configs/requests/tool.ts"
+  ],
   "exclude": ["node_modules", "dist"]
 }

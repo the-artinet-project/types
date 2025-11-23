@@ -1,24 +1,27 @@
 import z from "zod";
-import { RemoteServerSchema } from "../base.js";
+import { ToolServerSchema, AgentServerSchema } from "../configs/server.js";
 import {
   ToolInfoSchema,
   ToolRequestSchema,
   ToolResponseSchema,
-} from "../tool.js";
+} from "../configs/requests/tool.js";
 import {
   AgentCallResultSchema,
   AgentRequestSchema,
   AgentResponseSchema,
-} from "../agent.js";
+} from "../configs/requests/agent.js";
+
+//todo: move AgentCardSchema to types
 import { AgentCardSchema } from "@artinet/sdk";
 
 export const BaseOptionsSchema = z.object({
   params: z.record(z.unknown()).optional(),
 });
 export type BaseOptions = z.infer<typeof BaseOptionsSchema>;
-
+//todo: remove remote servers & local servers with tool-services
 export const ToolOptions = z.object({
-  remoteServers: z.array(RemoteServerSchema).optional(),
+  remoteServers: z.array(ToolServerSchema).optional(),
+  //todo: use parameters instead of ToolInfoSchema
   localServers: z.array(ToolInfoSchema).optional(),
   results: z.array(ToolResponseSchema).optional(),
 });
@@ -30,8 +33,10 @@ export const ToolResponseOptions = z.object({
 });
 export type ToolResponseOptions = z.infer<typeof ToolResponseOptions>;
 
+//todo: remove remote servers & local servers with agent-services
 export const AgentOptions = z.object({
-  remoteServers: z.array(RemoteServerSchema).optional(),
+  remoteServers: z.array(AgentServerSchema).optional(),
+  //todo: use parameters instead of AgentCardSchema
   localServers: z.array(AgentCardSchema).optional(),
   responses: z.array(AgentCallResultSchema).optional(),
 });

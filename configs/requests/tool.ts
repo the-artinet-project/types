@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { BaseSchema, CallerIdSchema, WithKindSchema } from "./base.js";
+import { BaseSchema, CallerIdSchema, WithKindSchema } from "../../base.js";
 import {
   ImplementationSchema,
   ResourceSchema,
@@ -10,6 +10,7 @@ import {
   CallToolResultSchema,
 } from "@modelcontextprotocol/sdk/types.js";
 
+//todo: merge with LocalToolSchema
 export const ToolInfoSchema = BaseSchema.partial({
   id: true,
 }).extend({

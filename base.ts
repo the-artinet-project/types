@@ -10,11 +10,6 @@ export const CallerIdSchema = z.object({
 });
 export type CallerId = z.infer<typeof CallerIdSchema>;
 
-export const RemoteServerSchema = BaseSchema.extend({
-  url: z.string().url(),
-});
-export type RemoteServer = z.infer<typeof RemoteServerSchema>;
-
 export const WithKindSchema = z.object({
   kind: z.string(),
 });
