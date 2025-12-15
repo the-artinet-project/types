@@ -2,11 +2,19 @@
  * Copyright 2025 The Artinet Project
  * SPDX-License-Identifier: Apache-2.0
  */
-import z from "zod";
-import { BaseSchema } from "../base.js";
+import z from "zod/v4";
+import { BaseSchema } from "../../base.js";
 
-export const MessageRoleSchema = z.enum(["user", "agent", "system"]);
+//TODO: We'll attempt to merge in fields like A2A Messages here
+export const MessageRoleSchema = z.enum([
+  "user",
+  "agent",
+  "assistant",
+  "system",
+]);
 export type MessageRole = z.infer<typeof MessageRoleSchema>;
+export const MessageRole = MessageRoleSchema.enum;
+
 export const SessionMessageSchema = BaseSchema.partial({
   id: true,
 }).extend({

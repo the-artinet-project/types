@@ -9,23 +9,23 @@
     "declarationDir": "./dist",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noUncheckedIndexedAccess": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "verbatimModuleSyntax": true,
+    "skipLibCheck": false,
     "lib": ["ES2022", "DOM"],
     "strict": true,
     "outDir": "./dist",
-    "rootDir": "./",
+    "rootDir": ".src/",
     "isolatedModules": true,
     "baseUrl": "."
   },
-  "include": [
-    "*.ts",
-    "api/**/*.ts",
-    "configs/requests/agent.ts",
-    "configs/requests/tool.ts"
-  ],
+  "include": ["index.ts"],
   "exclude": ["node_modules", "dist"]
 }

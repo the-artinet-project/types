@@ -2,15 +2,15 @@
  * Copyright 2025 The Artinet Project
  * SPDX-License-Identifier: Apache-2.0
  */
-import z from "zod";
-import { BaseSchema } from "../base.js";
+import z from "zod/v4";
 import { SessionSchema } from "./session.js";
 import {
   ConnectOptionsSchema,
   ConnectResponseOptionsSchema,
-} from "./option.js";
+} from "../options/index.js";
+import { APIRequestSchema, APIResponseSchema } from "../api.js";
 
-export const ConnectRequestSchema = z.object({
+export const ConnectRequestSchema = APIRequestSchema.extend({
   identifier: z.string(),
   session: SessionSchema,
   preferredEndpoint: z.string(),
@@ -18,11 +18,10 @@ export const ConnectRequestSchema = z.object({
 });
 export type ConnectRequest = z.infer<typeof ConnectRequestSchema>;
 
-export const ConnectResponseSchema = BaseSchema.partial({
-  id: true,
+export const ConnectResponseSchema = APIResponseSchema.required({
+  timestamp: true,
 }).extend({
   agentResponse: z.string(),
-  timestamp: z.string().datetime(),
   systemMessage: z.string().optional(),
   error: z.any().optional(),
   options: ConnectResponseOptionsSchema.optional(),
