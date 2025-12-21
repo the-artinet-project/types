@@ -21,7 +21,12 @@ export const ToolInfoSchema = BaseSchema.partial({
   .describe("The info of the tool.");
 export type ToolInfo = z.infer<typeof ToolInfoSchema>;
 
+export const isToolInfo = (info: any): info is ToolInfo => {
+  return ToolInfoSchema.safeParse(info).success;
+};
+
 export const ToolServerSchema = ServiceConfigSchema.extend({
+  uri: z.string().describe("The URI of the tool."),
   type: z.literal("mcp").default("mcp"),
   //This is optional because Servers may not have an info object on instantiation.
   info: ToolInfoSchema.optional().describe("The info of the tool."),
@@ -44,13 +49,11 @@ export const ToolInstanceArgumentsSchema = z.union([
 export type ToolInstanceArguments = z.infer<typeof ToolInstanceArgumentsSchema>;
 
 //A runtime locked representation of a tool.
-export const ToolInstanceSchema = ToolServerSchema.omit({
+export const ToolInstanceSchema = ToolServerSchema.partial({
   url: true,
-  //? Maybe we should keep headers?
   headers: true,
 }).extend({
-  uri: z.string().describe("The URI of the tool."),
-  arguments: ToolInstanceArgumentsSchema.describe(
+  arguments: ToolInstanceArgumentsSchema.optional().describe(
     "The arguments to be used to start the tool."
   ),
   info: ToolInfoSchema.partial().required({
@@ -73,17 +76,17 @@ export const ToolServiceSchema = z.union([
 ]);
 export type ToolService = z.infer<typeof ToolServiceSchema>;
 
-export const isToolServer = (tool: ToolService): tool is ToolServer => {
-  return ToolServerSchema.safeParse(tool).success;
-};
+export const isToolServer = (tool: unknown): tool is ToolServer =>
+  ToolServerSchema.safeParse(tool).success;
 
-export const isToolInstance = (tool: ToolService): tool is ToolInstance => {
-  return ToolInstanceSchema.safeParse(tool).success;
-};
+export const isToolInstance = (tool: unknown): tool is ToolInstance =>
+  ToolInstanceSchema.safeParse(tool).success;
 
 export const ToolCallSchema = ToolInstanceSchema.partial({
   type: true,
   id: true,
+  arguments: true,
+  info: true,
 }).extend({
   call: MCP.CallToolRequestParamsSchema.describe(
     "The call to invoke the tool."
@@ -93,7 +96,7 @@ export type ToolCall = z.infer<typeof ToolCallSchema>;
 
 //A structure suitable for transporting calls across runtime boundaries
 export const ToolRequestSchema = ToolCallSchema.extend(WithKindSchema.shape)
-  .extend(CallerIdSchema.required().shape)
+  .extend(CallerIdSchema.shape)
   .extend({
     kind: z.literal("tool_request").default("tool_request"),
   })
@@ -101,8 +104,14 @@ export const ToolRequestSchema = ToolCallSchema.extend(WithKindSchema.shape)
     message: "Kind must be tool_request",
   });
 export type ToolRequest = z.infer<typeof ToolRequestSchema>;
+export const isToolRequest = (req: unknown): req is ToolRequest =>
+  ToolRequestSchema.safeParse(req).success;
 
-export const ToolCallResultSchema = ToolCallSchema.extend({
+export const ToolCallResultSchema = ToolCallSchema.partial({
+  arguments: true,
+  info: true,
+  call: true,
+}).extend({
   result: MCP.CallToolResultSchema.describe("The result of the tool call."),
   error: z.unknown().optional().describe("The error of the tool call."),
 });
@@ -111,7 +120,7 @@ export type ToolCallResult = z.infer<typeof ToolCallResultSchema>;
 export const ToolResponseSchema = ToolCallResultSchema.extend(
   WithKindSchema.shape
 )
-  .extend(CallerIdSchema.required().shape)
+  .extend(CallerIdSchema.shape)
   .extend({
     kind: z.literal("tool_response").default("tool_response"),
   })
@@ -119,3 +128,5 @@ export const ToolResponseSchema = ToolCallResultSchema.extend(
     message: "Kind must be tool_response",
   });
 export type ToolResponse = z.infer<typeof ToolResponseSchema>;
+export const isToolResponse = (res: unknown): res is ToolResponse =>
+  ToolResponseSchema.safeParse(res).success;

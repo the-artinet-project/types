@@ -5,7 +5,7 @@
 
 import { z } from "zod/v4";
 import { JSONRPCErrorSchema } from "./rpc.js";
-
+//TODO: Align with MCP error codes
 /**
  * @description Error code for JSON Parse Error (-32700). Invalid JSON was received by the server.
  */

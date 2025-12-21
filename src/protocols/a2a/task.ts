@@ -60,7 +60,7 @@ export type TaskQueryParams = z.infer<typeof TaskQueryParamsSchema>;
 export const TaskStatusSchema = z.object({
   state: TaskStateSchema,
   message: MessageSchema.optional(),
-  timestamp: z.string().datetime().optional(),
+  timestamp: z.iso.datetime({ offset: true }).optional(),
 });
 export type TaskStatus = z.infer<typeof TaskStatusSchema>;
 
@@ -74,7 +74,7 @@ export const TaskSchema = z.object({
   history: z.array(MessageSchema).optional(),
   artifacts: z.array(ArtifactSchema).optional(),
   metadata: z.record(z.string(), z.unknown()).optional(),
-  kind: KindSchema.refine((kind) => kind === "task"),
+  kind: z.literal(KindSchema.enum["task"]),
 });
 export type Task = z.infer<typeof TaskSchema>;
 
@@ -84,7 +84,7 @@ export type Task = z.infer<typeof TaskSchema>;
 export const TaskStatusUpdateEventSchema = z.object({
   taskId: z.string(),
   contextId: z.string(),
-  kind: KindSchema.refine((kind) => kind === "status-update"),
+  kind: z.literal(KindSchema.enum["status-update"]),
   status: TaskStatusSchema,
   final: z.boolean(),
   metadata: z.record(z.string(), z.unknown()).optional(),
@@ -97,7 +97,7 @@ export type TaskStatusUpdateEvent = z.infer<typeof TaskStatusUpdateEventSchema>;
 export const TaskArtifactUpdateEventSchema = z.object({
   taskId: z.string(),
   contextId: z.string(),
-  kind: KindSchema.refine((kind) => kind === "artifact-update"),
+  kind: z.literal(KindSchema.enum["artifact-update"]),
   artifact: ArtifactSchema,
   append: z.boolean().optional(),
   lastChunk: z.boolean().optional(),

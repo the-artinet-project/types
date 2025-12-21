@@ -5,7 +5,6 @@
 
 import { z } from "zod/v4";
 import { KindSchema } from "./kind.js";
-
 /**
  * @description Defines base properties common to all message or artifact parts.
  */
@@ -102,9 +101,11 @@ export const FilePartSchema = PartBaseSchema.extend({
   /**
    * @required The type of this part, used as a discriminator. Always 'file'.
    */
-  kind: KindSchema.refine((kind) => kind === "file").describe(
-    "The type of this object, used as a discriminator. Always 'file' for a FilePart."
-  ),
+  kind: z
+    .literal(KindSchema.enum["file"])
+    .describe(
+      "The type of this object, used as a discriminator. Always 'file' for a FilePart."
+    ),
   /**
    * @required The file content, represented as either a URI or as base64-encoded bytes.
    */
@@ -122,9 +123,11 @@ export const TextPartSchema = PartBaseSchema.extend({
   /**
    * @required The type of this object, used as a discriminator. Always 'text' for a TextPart.
    */
-  kind: KindSchema.refine((kind) => kind === "text").describe(
-    "The type of this object, used as a discriminator. Always 'text' for a TextPart."
-  ),
+  kind: z
+    .literal(KindSchema.enum["text"])
+    .describe(
+      "The type of this object, used as a discriminator. Always 'text' for a TextPart."
+    ),
   /**
    * @required The string content of the text part.
    */
@@ -139,9 +142,11 @@ export const DataPartSchema = PartBaseSchema.extend({
   /**
    * @required The type of this object, used as a discriminator. Always 'data' for a DataPart.
    */
-  kind: KindSchema.refine((kind) => kind === "data").describe(
-    "The type of this object, used as a discriminator. Always 'data' for a DataPart."
-  ),
+  kind: z
+    .literal(KindSchema.enum["data"])
+    .describe(
+      "The type of this object, used as a discriminator. Always 'data' for a DataPart."
+    ),
   /**
    * @required The structured data content of the data part.
    */
@@ -304,9 +309,11 @@ export const MessageSchema = z
     /**
      * @required The type of this object, used as a discriminator. Always 'message' for a Message.
      */
-    kind: KindSchema.refine((kind) => kind === "message").describe(
-      "The type of this object, used as a discriminator. Always 'message' for a Message."
-    ),
+    kind: z
+      .literal(KindSchema.enum["message"])
+      .describe(
+        "The type of this object, used as a discriminator. Always 'message' for a Message."
+      ),
   })
   .describe(
     "Represents a single message in the conversation between a user and an agent."

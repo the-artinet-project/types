@@ -11,6 +11,7 @@ import { AgentServiceSchema } from "../../runtime/agent.js";
 
 export const AgentOptions = z.object({
   services: z.array(AgentServiceSchema).optional(),
+  requests: z.array(AgentRequestSchema).optional(),
   responses: z
     .array(AgentResponseSchema)
     .optional()
@@ -19,7 +20,7 @@ export const AgentOptions = z.object({
 export type AgentOptions = z.infer<typeof AgentOptions>;
 
 export const AgentResponseOptions = z.object({
-  requests: z.array(AgentRequestSchema),
-  responses: z.array(AgentResponseSchema),
+  requests: z.array(AgentRequestSchema).optional(),
+  responses: z.array(AgentResponseSchema).optional(),
 });
 export type AgentResponseOptions = z.infer<typeof AgentResponseOptions>;

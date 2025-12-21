@@ -43,9 +43,9 @@ export const APIKeySecuritySchemeSchema = SecuritySchemeBaseSchema.extend({
   /**
    * @required API Key Type of the security scheme.
    */
-  type: SecuritySchemeTypeSchema.refine((type) => type === "apiKey").describe(
-    "API Key Type of the security scheme."
-  ),
+  type: z
+    .literal(SecuritySchemeTypeSchema.enum.apiKey)
+    .describe("API Key Type of the security scheme."),
 
   /**
    * @required The location of the API key. Valid values are "query", "header", or "cookie".
@@ -73,9 +73,9 @@ export const HTTPAuthSecuritySchemeSchema = SecuritySchemeBaseSchema.extend({
   /**
    * @required HTTP Type of the security scheme.
    */
-  type: SecuritySchemeTypeSchema.refine((type) => type === "http").describe(
-    "HTTP Type of the security scheme."
-  ),
+  type: z
+    .literal(SecuritySchemeTypeSchema.enum.http)
+    .describe("HTTP Type of the security scheme."),
 
   /**
    * @required The name of the HTTP Authentication scheme to be used in the Authorization header as defined
@@ -336,9 +336,9 @@ export const OAuth2SecuritySchemeSchema = SecuritySchemeBaseSchema.extend({
   /**
    * @required OAuth2 Type of the security scheme.
    */
-  type: SecuritySchemeTypeSchema.refine((type) => type === "oauth2").describe(
-    "OAuth2 Type of the security scheme."
-  ),
+  type: z
+    .literal(SecuritySchemeTypeSchema.enum.oauth2)
+    .describe("OAuth2 Type of the security scheme."),
 
   /**
    * @required An object containing configuration information for the flow types supported.
@@ -367,7 +367,7 @@ export const OpenIdConnectSecuritySchemeSchema =
     /**
      * @required Type of the security scheme.
      */
-    type: SecuritySchemeTypeSchema.refine((type) => type === "openIdConnect"),
+    type: z.literal(SecuritySchemeTypeSchema.enum.openIdConnect),
 
     /**
      * @required Well-known URL to discover the [[OpenID-Connect-Discovery]] provider metadata.
@@ -386,7 +386,7 @@ export const MutualTLSSecuritySchemeSchema = SecuritySchemeBaseSchema.extend({
   /**
    * @required Type of the security scheme.
    */
-  type: SecuritySchemeTypeSchema.refine((type) => type === "mutualTLS"),
+  type: z.literal(SecuritySchemeTypeSchema.enum.mutualTLS),
 });
 
 export type MutualTLSSecurityScheme = z.infer<

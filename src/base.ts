@@ -12,7 +12,7 @@ import z from "zod/v4";
  * @note `id`s are not guaranteed to be unique.
  */
 export const BaseSchema = z.object({
-  id: z.string(),
+  id: z.string().optional(),
 });
 export type Base = z.infer<typeof BaseSchema>;
 //todo: move below to utils
@@ -46,7 +46,6 @@ export type WithKind = z.infer<typeof WithKindSchema>;
 const literalSchema = z.union([z.string(), z.number(), z.boolean(), z.null()]);
 type Literal = z.infer<typeof literalSchema>;
 type JSON = Literal | { [key: string]: JSON } | JSON[];
-//todo: convert to zod/v4 JSONSchema
 export const JSONSchema: z.ZodType<JSON> = z.lazy(() =>
   z.union([
     literalSchema,

@@ -8,51 +8,41 @@ import { ServerSchema } from "./server.js";
 import { MessageSchema, TaskSchema } from "../protocols/a2a/index.js";
 import { AgentCardSchema } from "../protocols/a2a/agent.js";
 
-//TODO: We may want to align the AgentDefinitionSchema with AgentInfo vs AgentCard
-//Why? Because AgentInfo is more flexible and can represent an entirely different type of object.
-//We want to avoid having two different schemas for the same object outside of the SDK (sufficient to have AgentCard fully defined in the SDK).
-export const AgentInfoSchema = BaseSchema.extend({
-  uri: z.string().optional().describe("The URI of the agent."),
-}).extend(
-  AgentCardSchema.partial({
-    url: true,
-  }).shape
-).describe(`
+export const AgentInfoSchema = BaseSchema.partial({
+  id: true,
+})
+  .extend({
+    uri: z.string().describe("The URI of the agent."),
+  })
+  .extend(AgentCardSchema.shape).describe(`
 Agent Info Schema:
 Used for type checking and potential post-processing.
 The agent info may represent an entirely different type of object.
 `);
 export type AgentInfo = z.infer<typeof AgentInfoSchema>;
+export const isAgentInfo = (info: any): info is AgentInfo =>
+  AgentInfoSchema.safeParse(info).success;
 
 export const AgentServerSchema = ServerSchema.extend({
   type: z.literal("a2a").default("a2a"),
   //This is optional because Servers may not have an info object on instantiation.
-  info: AgentInfoSchema.required({
-    url: true,
-  })
-    .optional()
-    .describe("The info of the agent."),
+  info: AgentInfoSchema.optional().describe("The info of the agent."),
 });
 export type AgentServer = z.infer<typeof AgentServerSchema>;
 
 //A runtime locked representation of an agent
-export const AgentInstanceSchema = AgentServerSchema.omit({
+export const AgentInstanceSchema = AgentServerSchema.partial({
   url: true,
   headers: true,
 }).extend({
   uri: z.string().describe("The URI of the agent."),
 
-  info: AgentInfoSchema.required({
-    uri: true,
-    capabilities: true,
-  })
-    .required()
-    .describe(
-      `The info of the agent. 
+  info: AgentInfoSchema.describe(`
+The info of the agent. 
 If not provided, the info will be fetched from the URI.
 Optional for now, but may become required in the future.
-Strongly encouraged to provide the info if possible.`
-    ),
+Strongly encouraged to provide the info if possible.
+`),
 });
 export type AgentInstance = z.infer<typeof AgentInstanceSchema>;
 /**
@@ -70,30 +60,26 @@ export const AgentServiceSchema = z.union([
 ]);
 export type AgentService = z.infer<typeof AgentServiceSchema>;
 
-export const isAgentServer = (agent: AgentService): agent is AgentServer => {
-  return AgentServiceSchema.safeParse(agent).success;
-};
+export const isAgentServer = (agent: unknown): agent is AgentServer =>
+  AgentServiceSchema.safeParse(agent).success;
 
-export const isAgentInstance = (
-  agent: AgentService
-): agent is AgentInstance => {
-  return AgentInstanceSchema.safeParse(agent).success;
-};
+export const isAgentInstance = (agent: unknown): agent is AgentInstance =>
+  AgentInstanceSchema.safeParse(agent).success;
 
 export const AgentCallSchema = AgentInstanceSchema.partial({
-  //TODO: make type & id required
+  info: true,
   type: true,
   id: true,
 }).extend({
   call: z
-    .union([MessageSchema, TaskSchema, z.string()])
-    .describe("The call the agent."),
+    .union([MessageSchema, z.string()])
+    .describe("The message being sent to the agent."),
 });
 export type AgentCall = z.infer<typeof AgentCallSchema>;
 
 //A structure suitable for transporting calls across runtime boundaries
 export const AgentRequestSchema = AgentCallSchema.extend(WithKindSchema.shape)
-  .extend(CallerIdSchema.required().shape)
+  .extend(CallerIdSchema.shape)
   .extend({
     kind: z.literal("agent_request").default("agent_request"),
   })
@@ -103,7 +89,15 @@ export const AgentRequestSchema = AgentCallSchema.extend(WithKindSchema.shape)
   .describe(
     "A structure suitable for transporting calls across runtime boundaries"
   );
+
 export type AgentRequest = z.infer<typeof AgentRequestSchema>;
+/**
+ * @description Checks if the given object is a valid AgentRequest.
+ * @param req - The object to check.
+ * @returns True if the object is a valid AgentRequest, false otherwise.
+ */
+export const isAgentRequest = (req: unknown): req is AgentRequest =>
+  AgentRequestSchema.safeParse(req).success;
 
 //TODO: Add Update Events to the result union (likely for platform v0.2)
 export const AgentCallResultSchema = AgentCallSchema.extend({
@@ -125,3 +119,6 @@ export const AgentResponseSchema = AgentCallResultSchema.extend(
     message: "Kind must be agent_response",
   });
 export type AgentResponse = z.infer<typeof AgentResponseSchema>;
+
+export const isAgentResponse = (res: unknown): res is AgentResponse =>
+  AgentResponseSchema.safeParse(res).success;

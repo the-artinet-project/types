@@ -13,7 +13,10 @@ export const APIResponseSchema = BaseSchema.partial({
   id: true,
 }).extend({
   requestId: z.string().optional().describe("The request ID"),
-  timestamp: z.string().datetime().optional().describe("The timestamp"),
+  timestamp: z.iso
+    .datetime({ offset: true })
+    .optional()
+    .describe("The timestamp"),
   success: z
     .boolean()
     .optional()

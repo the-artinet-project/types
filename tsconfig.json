@@ -22,10 +22,10 @@
     "lib": ["ES2022", "DOM"],
     "strict": true,
     "outDir": "./dist",
-    "rootDir": ".src/",
+    "rootDir": "./src/",
     "isolatedModules": true,
     "baseUrl": "."
   },
-  "include": ["index.ts"],
+  "include": ["./src/index.ts"],
   "exclude": ["node_modules", "dist"]
 }
