@@ -1,4 +1,8 @@
 /**
+ * Copyright 2025 The Artinet Project
+ * SPDX-License-Identifier: Apache-2.0
+ */
+/**
  * @fileoverview Type definitions for the Search module.
  *
  * Defines schemas and types for entity search operations:
@@ -10,7 +14,7 @@
  */
 
 import { z } from "zod/v4";
-import { APIRequestSchema, APIResponseSchema } from "../api.js";
+import { APIRequestSchema, APIResponseSchema } from "./base.js";
 
 /**
  * Schema for pagination cursor.

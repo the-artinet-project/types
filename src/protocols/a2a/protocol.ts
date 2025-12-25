@@ -36,7 +36,7 @@ import {
  * @description Union of all valid A2A request types defined in the protocol.
  * @description Represents any valid JSON-RPC request defined in the A2A protocol.
  */
-export const A2ARequestSchema = z.union([
+export const A2ARequestSchema = z.discriminatedUnion("method", [
   SendMessageRequestSchema,
   SendStreamingMessageRequestSchema,
   TaskResubscriptionRequestSchema,

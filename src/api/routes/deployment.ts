@@ -1,5 +1,9 @@
+/**
+ * Copyright 2025 The Artinet Project
+ * SPDX-License-Identifier: Apache-2.0
+ */
 import { z } from "zod/v4";
-import { APIResponseSchema, APIRequestSchema } from "../api.js";
+import { APIResponseSchema, APIRequestSchema } from "./base.js";
 import { AgentCardSchema } from "../../protocols/a2a/agent.js";
 
 export const BaseCreateAgentRequestSchema = APIRequestSchema.extend({

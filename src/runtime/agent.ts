@@ -24,6 +24,7 @@ export const isAgentInfo = (info: any): info is AgentInfo =>
   AgentInfoSchema.safeParse(info).success;
 
 export const AgentServerSchema = ServerSchema.extend({
+  uri: z.string().describe("The URI of the agent."),
   type: z.literal("a2a").default("a2a"),
   //This is optional because Servers may not have an info object on instantiation.
   info: AgentInfoSchema.optional().describe("The info of the agent."),
@@ -35,8 +36,6 @@ export const AgentInstanceSchema = AgentServerSchema.partial({
   url: true,
   headers: true,
 }).extend({
-  uri: z.string().describe("The URI of the agent."),
-
   info: AgentInfoSchema.describe(`
 The info of the agent. 
 If not provided, the info will be fetched from the URI.
@@ -54,10 +53,9 @@ export const LocalAgentSchema = AgentInstanceSchema;
  */
 export type LocalAgent = z.infer<typeof LocalAgentSchema>;
 
-export const AgentServiceSchema = z.union([
-  AgentServerSchema,
-  AgentInstanceSchema,
-]);
+export const AgentServiceSchema = z
+  .union([AgentServerSchema, AgentInstanceSchema])
+  .describe("An agent service is a server or instance of an agent.");
 export type AgentService = z.infer<typeof AgentServiceSchema>;
 
 export const isAgentServer = (agent: unknown): agent is AgentServer =>
@@ -66,9 +64,11 @@ export const isAgentServer = (agent: unknown): agent is AgentServer =>
 export const isAgentInstance = (agent: unknown): agent is AgentInstance =>
   AgentInstanceSchema.safeParse(agent).success;
 
+export const isAgentService = (service: unknown): service is AgentService =>
+  AgentServiceSchema.safeParse(service).success;
+
 export const AgentCallSchema = AgentInstanceSchema.partial({
   info: true,
-  type: true,
   id: true,
 }).extend({
   call: z
@@ -99,7 +99,6 @@ export type AgentRequest = z.infer<typeof AgentRequestSchema>;
 export const isAgentRequest = (req: unknown): req is AgentRequest =>
   AgentRequestSchema.safeParse(req).success;
 
-//TODO: Add Update Events to the result union (likely for platform v0.2)
 export const AgentCallResultSchema = AgentCallSchema.extend({
   result: z
     .union([MessageSchema, TaskSchema, z.string()])

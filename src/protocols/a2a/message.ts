@@ -109,7 +109,7 @@ export type SendMessageRequest = z.infer<typeof SendMessageRequestSchema>;
  * @description The result of a message send request, which can be a Message or the initial Task object.
  */
 export const SendMessageSuccessResultSchema = z
-  .union([MessageSchema, TaskSchema])
+  .discriminatedUnion("kind", [MessageSchema, TaskSchema])
   .describe(
     "The result of a message send request, which can be a Message or the initial Task object."
   );
@@ -159,7 +159,7 @@ export type SendStreamingMessageRequest = z.infer<
  * @description The result of a streaming message request, which can be a Message, Task, or a streaming update/artifact event.
  */
 export const SendStreamingMessageSuccessResultSchema = z
-  .union([
+  .discriminatedUnion("kind", [
     MessageSchema,
     TaskSchema,
     TaskStatusUpdateEventSchema,

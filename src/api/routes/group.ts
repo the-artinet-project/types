@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 import { z } from "zod/v4";
-import { APIRequestSchema, APIResponseSchema } from "../api.js";
+import { APIRequestSchema, APIResponseSchema } from "./base.js";
 import { GroupSchema } from "../../runtime/group.js";
 
 /**

@@ -1,3 +1,1 @@
-export * from "./options/index.js";
-export * from "./routes/index.js";
-export * from "./api.js";
+export * as API from "./index.js";

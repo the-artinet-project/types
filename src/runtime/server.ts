@@ -26,8 +26,10 @@ export const ServerConfigSchema = BaseSchema.extend({
 export type ServerConfig = z.infer<typeof ServerConfigSchema>;
 
 export const ServiceConfigSchema = ServerConfigSchema.extend({
+  //TODO: rename type to protocol
+  //TODO: use type to support more types of services mcp_instance, tool_instance, a2a_instance, a2a_server, mcp_server ??
   type: z.enum(["mcp", "a2a"]).describe("The type of server"),
-});
+}).describe("A service config is a server config with a type.");
 export type ServiceConfig = z.infer<typeof ServiceConfigSchema>;
 
 /**

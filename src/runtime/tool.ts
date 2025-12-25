@@ -11,6 +11,7 @@ export const ToolInfoSchema = BaseSchema.partial({
   id: true,
 })
   .extend({
+    uri: z.string().describe("The URI of the tool."),
     implementation: MCP.ImplementationSchema,
     serverCapabilities: MCP.ServerCapabilitiesSchema,
     tools: z.array(MCP.ToolSchema),
@@ -26,7 +27,11 @@ export const isToolInfo = (info: any): info is ToolInfo => {
 };
 
 export const ToolServerSchema = ServiceConfigSchema.extend({
-  uri: z.string().describe("The URI of the tool."),
+  /**
+   * The URI of the tool/function.
+   * We use uri because it has broad applicability.
+   */
+  uri: z.string().describe("The URI of the tool/function name."),
   type: z.literal("mcp").default("mcp"),
   //This is optional because Servers may not have an info object on instantiation.
   info: ToolInfoSchema.optional().describe("The info of the tool."),
@@ -44,6 +49,7 @@ export type MCPStdioArguments = z.infer<typeof MCPStdioArgumentsSchema>;
 //TODO: add support for in-memory mcp & function-calling
 export const ToolInstanceArgumentsSchema = z.union([
   MCPStdioArgumentsSchema,
+  z.string().describe("The arguments for the function call."),
   z.unknown(),
 ]);
 export type ToolInstanceArguments = z.infer<typeof ToolInstanceArgumentsSchema>;
@@ -57,6 +63,7 @@ export const ToolInstanceSchema = ToolServerSchema.partial({
     "The arguments to be used to start the tool."
   ),
   info: ToolInfoSchema.partial().required({
+    uri: true,
     implementation: true,
   }),
 });
@@ -70,10 +77,9 @@ export const LocalToolSchema = ToolInstanceSchema;
  */
 export type LocalTool = z.infer<typeof LocalToolSchema>;
 
-export const ToolServiceSchema = z.union([
-  ToolServerSchema,
-  ToolInstanceSchema,
-]);
+export const ToolServiceSchema = z
+  .union([ToolServerSchema, ToolInstanceSchema])
+  .describe("A tool service is a server or instance of a tool.");
 export type ToolService = z.infer<typeof ToolServiceSchema>;
 
 export const isToolServer = (tool: unknown): tool is ToolServer =>
@@ -82,14 +88,19 @@ export const isToolServer = (tool: unknown): tool is ToolServer =>
 export const isToolInstance = (tool: unknown): tool is ToolInstance =>
   ToolInstanceSchema.safeParse(tool).success;
 
+export const isToolService = (service: unknown): service is ToolService =>
+  ToolServiceSchema.safeParse(service).success;
+
 export const ToolCallSchema = ToolInstanceSchema.partial({
-  type: true,
   id: true,
   arguments: true,
   info: true,
 }).extend({
   call: MCP.CallToolRequestParamsSchema.describe(
     "The call to invoke the tool."
+  ),
+  content: MCP.ToolUseContentSchema.optional().describe(
+    "The content of the tool call."
   ),
 });
 export type ToolCall = z.infer<typeof ToolCallSchema>;
@@ -113,6 +124,9 @@ export const ToolCallResultSchema = ToolCallSchema.partial({
   call: true,
 }).extend({
   result: MCP.CallToolResultSchema.describe("The result of the tool call."),
+  content: MCP.ToolResultContentSchema.optional().describe(
+    "The content of the tool result."
+  ),
   error: z.unknown().optional().describe("The error of the tool call."),
 });
 export type ToolCallResult = z.infer<typeof ToolCallResultSchema>;

@@ -113,7 +113,6 @@ export const FilePartSchema = PartBaseSchema.extend({
     "The file content, represented as either a URI or as base64-encoded bytes."
   ),
 }).describe("Represents a file segment within a message or artifact.");
-
 export type FilePart = z.infer<typeof FilePartSchema>;
 
 /**
@@ -163,7 +162,7 @@ export type DataPart = z.infer<typeof DataPartSchema>;
  * be text, a file, or structured data.
  */
 export const PartSchema = z
-  .union([TextPartSchema, FilePartSchema, DataPartSchema])
+  .discriminatedUnion("kind", [TextPartSchema, FilePartSchema, DataPartSchema])
   .describe(
     "A discriminated union representing a part of a message or artifact, which can be text, a file, or structured data."
   );
