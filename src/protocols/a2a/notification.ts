@@ -7,8 +7,8 @@ import { z } from "zod/v4";
 import {
   JSONRPCErrorResponseSchema,
   JSONRPCRequestSchema,
-  JSONRPCSuccessResponseSchema,
-} from "./rpc.js";
+  JSONRPCResultResponseSchema,
+} from "@modelcontextprotocol/sdk/types.js";
 import { TaskIdParamsSchema } from "./task.js";
 
 /**
@@ -176,7 +176,7 @@ export type SetTaskPushNotificationConfigRequest = z.infer<
  * @description JSON-RPC success response model for the 'tasks/pushNotificationConfig/set' method.
  */
 export const SetTaskPushNotificationConfigSuccessResponseSchema =
-  JSONRPCSuccessResponseSchema.extend({
+  JSONRPCResultResponseSchema.extend({
     /**
      * @required The result of the request, which can be a direct reply Message or the initial Task object.
      */
@@ -223,7 +223,7 @@ export type GetTaskPushNotificationConfigRequest = z.infer<
  * @description JSON-RPC success response model for the 'tasks/pushNotificationConfig/get' method.
  */
 export const GetTaskPushNotificationConfigSuccessResponseSchema =
-  JSONRPCSuccessResponseSchema.extend({
+  JSONRPCResultResponseSchema.extend({
     /**
      * @required The result, containing the requested push notification configuration.
      */
@@ -277,7 +277,7 @@ export type ListTaskPushNotificationConfigResult = z.infer<
  * @description JSON-RPC success response model for the 'tasks/pushNotificationConfig/list' method.
  */
 export const ListTaskPushNotificationConfigSuccessResponseSchema =
-  JSONRPCSuccessResponseSchema.extend({
+  JSONRPCResultResponseSchema.extend({
     /**
      * @required The result, containing the list of push notification configurations.
      */
@@ -324,7 +324,7 @@ export type DeleteTaskPushNotificationConfigRequest = z.infer<
  * @description JSON-RPC success response model for the 'tasks/pushNotificationConfig/delete' method.
  */
 export const DeleteTaskPushNotificationConfigSuccessResponseSchema =
-  JSONRPCSuccessResponseSchema.extend({
+  JSONRPCResultResponseSchema.extend({
     /**
      * @required The result is null on successful deletion.
      */

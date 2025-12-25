@@ -4,13 +4,13 @@
  */
 
 import { z } from "zod/v4";
-import { JSONRPCErrorSchema } from "./rpc.js";
+import { JSONRPCErrorResponseSchema } from "@modelcontextprotocol/sdk/types.js";
 //TODO: Align with MCP error codes
 /**
  * @description Error code for JSON Parse Error (-32700). Invalid JSON was received by the server.
  */
 export const ErrorCodeParseError = -32700;
-export const JSONParseErrorSchema = JSONRPCErrorSchema.extend({
+export const JSONParseErrorSchema = JSONRPCErrorResponseSchema.extend({
   code: z.literal(ErrorCodeParseError),
   message: z
     .string()
@@ -23,7 +23,7 @@ export type JSONParseError = z.infer<typeof JSONParseErrorSchema>;
  * @description Error code for Invalid Request (-32600). The JSON sent is not a valid Request object.
  */
 export const ErrorCodeInvalidRequest = -32600;
-export const InvalidRequestErrorSchema = JSONRPCErrorSchema.extend({
+export const InvalidRequestErrorSchema = JSONRPCErrorResponseSchema.extend({
   code: z.literal(ErrorCodeInvalidRequest),
   message: z
     .string()
@@ -36,7 +36,7 @@ export type InvalidRequestError = z.infer<typeof InvalidRequestErrorSchema>;
  * @description Error code for Method Not Found (-32601). The method does not exist / is not available.
  */
 export const ErrorCodeMethodNotFound = -32601;
-export const MethodNotFoundErrorSchema = JSONRPCErrorSchema.extend({
+export const MethodNotFoundErrorSchema = JSONRPCErrorResponseSchema.extend({
   code: z.literal(ErrorCodeMethodNotFound),
   message: z
     .string()
@@ -49,7 +49,7 @@ export type MethodNotFoundError = z.infer<typeof MethodNotFoundErrorSchema>;
  * @description Error code for Invalid Params (-32602). Invalid method parameter(s).
  */
 export const ErrorCodeInvalidParams = -32602;
-export const InvalidParamsErrorSchema = JSONRPCErrorSchema.extend({
+export const InvalidParamsErrorSchema = JSONRPCErrorResponseSchema.extend({
   code: z.literal(ErrorCodeInvalidParams),
   message: z
     .string()
@@ -62,7 +62,7 @@ export type InvalidParamsError = z.infer<typeof InvalidParamsErrorSchema>;
  * @description Error code for Internal Error (-32603). Internal JSON-RPC error.
  */
 export const ErrorCodeInternalError = -32603;
-export const InternalErrorSchema = JSONRPCErrorSchema.extend({
+export const InternalErrorSchema = JSONRPCErrorResponseSchema.extend({
   code: z.literal(ErrorCodeInternalError),
   message: z.string().describe("The error message.").default("Internal error"),
 }).describe("Represents a JSON-RPC error for an internal error.");
@@ -72,7 +72,7 @@ export type InternalError = z.infer<typeof InternalErrorSchema>;
  * @description Error code for Task Not Found (-32001). The specified task was not found.
  */
 export const ErrorCodeTaskNotFound = -32001;
-export const TaskNotFoundErrorSchema = JSONRPCErrorSchema.extend({
+export const TaskNotFoundErrorSchema = JSONRPCErrorResponseSchema.extend({
   code: z.literal(ErrorCodeTaskNotFound),
   message: z.string().describe("The error message.").default("Task not found"),
 }).describe("Represents a JSON-RPC error for a task not found.");
@@ -82,7 +82,7 @@ export type TaskNotFoundError = z.infer<typeof TaskNotFoundErrorSchema>;
  * @description Error code for Task Not Cancelable (-32002). The specified task cannot be canceled.
  */
 export const ErrorCodeTaskNotCancelable = -32002;
-export const TaskNotCancelableErrorSchema = JSONRPCErrorSchema.extend({
+export const TaskNotCancelableErrorSchema = JSONRPCErrorResponseSchema.extend({
   code: z.literal(ErrorCodeTaskNotCancelable),
   message: z
     .string()
@@ -98,7 +98,7 @@ export type TaskNotCancelableError = z.infer<
  */
 export const ErrorCodePushNotificationNotSupported = -32003;
 export const PushNotificationNotSupportedErrorSchema =
-  JSONRPCErrorSchema.extend({
+  JSONRPCErrorResponseSchema.extend({
     code: z.literal(ErrorCodePushNotificationNotSupported),
     message: z
       .string()
@@ -115,13 +115,14 @@ export type PushNotificationNotSupportedError = z.infer<
  * @description Error code for Unsupported Operation (-32004). The requested operation is not supported by the agent.
  */
 export const ErrorCodeUnsupportedOperation = -32004;
-export const UnsupportedOperationErrorSchema = JSONRPCErrorSchema.extend({
-  code: z.literal(ErrorCodeUnsupportedOperation),
-  message: z
-    .string()
-    .describe("The error message.")
-    .default("This operation is not supported"),
-}).describe("Represents a JSON-RPC error for an unsupported operation.");
+export const UnsupportedOperationErrorSchema =
+  JSONRPCErrorResponseSchema.extend({
+    code: z.literal(ErrorCodeUnsupportedOperation),
+    message: z
+      .string()
+      .describe("The error message.")
+      .default("This operation is not supported"),
+  }).describe("Represents a JSON-RPC error for an unsupported operation.");
 export type UnsupportedOperationError = z.infer<
   typeof UnsupportedOperationErrorSchema
 >;
@@ -130,13 +131,14 @@ export type UnsupportedOperationError = z.infer<
  * @description Error code for Content Type Not Supported (-32005). The requested content type is not supported by the agent.
  */
 export const ErrorCodeContentTypeNotSupported = -32005;
-export const ContentTypeNotSupportedErrorSchema = JSONRPCErrorSchema.extend({
-  code: z.literal(ErrorCodeContentTypeNotSupported),
-  message: z
-    .string()
-    .describe("The error message.")
-    .default("Incompatible content types"),
-}).describe("Represents a JSON-RPC error for a content type not supported.");
+export const ContentTypeNotSupportedErrorSchema =
+  JSONRPCErrorResponseSchema.extend({
+    code: z.literal(ErrorCodeContentTypeNotSupported),
+    message: z
+      .string()
+      .describe("The error message.")
+      .default("Incompatible content types"),
+  }).describe("Represents a JSON-RPC error for a content type not supported.");
 export type ContentTypeNotSupportedError = z.infer<
   typeof ContentTypeNotSupportedErrorSchema
 >;
@@ -145,15 +147,16 @@ export type ContentTypeNotSupportedError = z.infer<
  * @description Error code for Invalid Agent Response (-32006). The agent returned an invalid response for the current method.
  */
 export const ErrorCodeInvalidAgentResponse = -32006;
-export const InvalidAgentResponseErrorSchema = JSONRPCErrorSchema.extend({
-  code: z.literal(ErrorCodeInvalidAgentResponse),
-  message: z
-    .string()
-    .describe("The error message.")
-    .default("Invalid agent response"),
-}).describe(
-  "Represents a JSON-RPC error for an invalid agent response. This error is returned when the agent returns an invalid response for the current method."
-);
+export const InvalidAgentResponseErrorSchema =
+  JSONRPCErrorResponseSchema.extend({
+    code: z.literal(ErrorCodeInvalidAgentResponse),
+    message: z
+      .string()
+      .describe("The error message.")
+      .default("Invalid agent response"),
+  }).describe(
+    "Represents a JSON-RPC error for an invalid agent response. This error is returned when the agent returns an invalid response for the current method."
+  );
 export type InvalidAgentResponseError = z.infer<
   typeof InvalidAgentResponseErrorSchema
 >;
@@ -163,7 +166,7 @@ export type InvalidAgentResponseError = z.infer<
  */
 export const ErrorCodeAuthenticatedExtendedCardNotConfigured = -32007;
 export const AuthenticatedExtendedCardNotConfiguredErrorSchema =
-  JSONRPCErrorSchema.extend({
+  JSONRPCErrorResponseSchema.extend({
     code: z.literal(ErrorCodeAuthenticatedExtendedCardNotConfigured),
     message: z
       .string()
@@ -195,7 +198,7 @@ export const KnownErrorCodeSchema = z.union([
 ]);
 export type KnownErrorCode = z.infer<typeof KnownErrorCodeSchema>;
 
-export const A2AErrorSchema = z.union([
+export const A2AErrorSchema = z.discriminatedUnion("code", [
   JSONParseErrorSchema,
   InvalidRequestErrorSchema,
   MethodNotFoundErrorSchema,

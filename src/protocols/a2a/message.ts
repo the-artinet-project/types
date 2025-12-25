@@ -14,8 +14,8 @@ import {
 import {
   JSONRPCErrorResponseSchema,
   JSONRPCRequestSchema,
-  JSONRPCSuccessResponseSchema,
-} from "./rpc.js";
+  JSONRPCResultResponseSchema,
+} from "@modelcontextprotocol/sdk/types.js";
 
 /**
  * @description Defines configuration options for a `message/send` or `message/stream` request.
@@ -120,7 +120,7 @@ export type SendMessageSuccessResult = z.infer<
  * @description JSON-RPC success response model for the 'message/send' method.
  */
 export const SendMessageSuccessResponseSchema =
-  JSONRPCSuccessResponseSchema.extend({
+  JSONRPCResultResponseSchema.extend({
     /**
      * @required The result of the request, which can be a direct reply Message or the initial Task object.
      */
@@ -176,7 +176,7 @@ export type SendStreamingMessageSuccessResult = z.infer<
  * The server may send multiple response objects for a single request.
  */
 export const SendStreamingMessageSuccessResponseSchema =
-  JSONRPCSuccessResponseSchema.extend({
+  JSONRPCResultResponseSchema.extend({
     /**
      * @required The result, which can be a Message, Task, or a streaming update event.
      */

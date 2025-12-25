@@ -8,10 +8,9 @@ import { SecuritySchemeSchema } from "./auth.js";
 import { TransportProtocolSchema, AgentInterfaceSchema } from "./transport.js";
 import {
   JSONRPCRequestSchema,
-  JSONRPCSuccessResponseSchema,
+  JSONRPCResultResponseSchema,
   JSONRPCErrorResponseSchema,
-} from "./rpc.js";
-
+} from "@modelcontextprotocol/sdk/types.js";
 /**
  * @description Represents the provider or organization behind an agent.
  */
@@ -395,7 +394,7 @@ export type GetAuthenticatedExtendedCardRequest = z.infer<
  * @description JSON-RPC success response model for the 'agent/getAuthenticatedExtendedCard' method.
  */
 export const GetAuthenticatedExtendedCardSuccessResponseSchema =
-  JSONRPCSuccessResponseSchema.extend({
+  JSONRPCResultResponseSchema.extend({
     /**
      * @required The result is an Agent Card object.
      */

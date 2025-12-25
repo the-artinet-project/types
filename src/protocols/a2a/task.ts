@@ -8,8 +8,8 @@ import { MessageSchema, ArtifactSchema } from "./parameters.js";
 import {
   JSONRPCErrorResponseSchema,
   JSONRPCRequestSchema,
-  JSONRPCSuccessResponseSchema,
-} from "./rpc.js";
+  JSONRPCResultResponseSchema,
+} from "@modelcontextprotocol/sdk/types.js";
 import { KindSchema } from "./kind.js";
 
 /**
@@ -121,16 +121,14 @@ export type GetTaskRequest = z.infer<typeof GetTaskRequestSchema>;
 /**
  * @description Represents a successful JSON-RPC response for the `tasks/get` method.
  */
-export const GetTaskSuccessResponseSchema = JSONRPCSuccessResponseSchema.extend(
-  {
-    /**
-     * @required The result of the request, which can be a direct reply Message or the initial Task object.
-     */
-    result: TaskSchema.describe(
-      "The result of the request, which can be a direct reply Message or the initial Task object."
-    ),
-  }
-).describe("JSON-RPC success response model for the 'tasks/get' method.");
+export const GetTaskSuccessResponseSchema = JSONRPCResultResponseSchema.extend({
+  /**
+   * @required The result of the request, which can be a direct reply Message or the initial Task object.
+   */
+  result: TaskSchema.describe(
+    "The result of the request, which can be a direct reply Message or the initial Task object."
+  ),
+}).describe("JSON-RPC success response model for the 'tasks/get' method.");
 export type GetTaskSuccessResponse = z.infer<
   typeof GetTaskSuccessResponseSchema
 >;
@@ -173,7 +171,7 @@ export type CancelTaskRequest = z.infer<typeof CancelTaskRequestSchema>;
  * @description Represents a successful JSON-RPC response for the `tasks/cancel` method.
  */
 export const CancelTaskSuccessResponseSchema =
-  JSONRPCSuccessResponseSchema.extend({
+  JSONRPCResultResponseSchema.extend({
     result: TaskSchema.describe(
       "The result of the request, which can be a direct reply Message or the initial Task object."
     ),
