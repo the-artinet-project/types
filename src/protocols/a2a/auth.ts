@@ -12,7 +12,7 @@ export const SecuritySchemeTypeSchema = z
   .enum(["apiKey", "http", "mutualTLS", "oauth2", "openIdConnect"])
   .describe("Type of a security scheme.");
 export const SecuritySchemeType = SecuritySchemeTypeSchema.enum;
-export type SecuritySchemeType = z.infer<typeof SecuritySchemeTypeSchema>;
+export type SecuritySchemeType = z.output<typeof SecuritySchemeTypeSchema>;
 
 /**
  * @description Base properties shared by all security schemes.
@@ -34,7 +34,7 @@ export const SecuritySchemeBaseSchema = z
   })
   .describe("Base properties shared by all security schemes.");
 
-export type SecuritySchemeBase = z.infer<typeof SecuritySchemeBaseSchema>;
+export type SecuritySchemeBase = z.output<typeof SecuritySchemeBaseSchema>;
 
 /**
  * @description Defines a security scheme using an API key.
@@ -64,7 +64,7 @@ export const APIKeySecuritySchemeSchema = SecuritySchemeBaseSchema.extend({
     .describe("The name of the header, query or cookie parameter to be used."),
 }).describe("Defines a security scheme using an API key.");
 
-export type APIKeySecurityScheme = z.infer<typeof APIKeySecuritySchemeSchema>;
+export type APIKeySecurityScheme = z.output<typeof APIKeySecuritySchemeSchema>;
 
 /**
  * @description HTTP Authentication security scheme.
@@ -101,7 +101,7 @@ export const HTTPAuthSecuritySchemeSchema = SecuritySchemeBaseSchema.extend({
     ),
 });
 
-export type HTTPAuthSecurityScheme = z.infer<
+export type HTTPAuthSecurityScheme = z.output<
   typeof HTTPAuthSecuritySchemeSchema
 >;
 
@@ -158,7 +158,7 @@ export const AuthorizationCodeOAuthFlowSchema = z
     "Configuration details for a supported Authorization Code OAuth Flow"
   );
 
-export type AuthorizationCodeOAuthFlow = z.infer<
+export type AuthorizationCodeOAuthFlow = z.output<
   typeof AuthorizationCodeOAuthFlowSchema
 >;
 
@@ -204,7 +204,7 @@ export const ClientCredentialsOAuthFlowSchema = z
     "Configuration details for a supported Client Credentials OAuth Flow"
   );
 
-export type ClientCredentialsOAuthFlow = z.infer<
+export type ClientCredentialsOAuthFlow = z.output<
   typeof ClientCredentialsOAuthFlowSchema
 >;
 
@@ -248,7 +248,7 @@ export const ImplicitOAuthFlowSchema = z
   })
   .describe("Configuration details for a supported Implicit OAuth Flow");
 
-export type ImplicitOAuthFlow = z.infer<typeof ImplicitOAuthFlowSchema>;
+export type ImplicitOAuthFlow = z.output<typeof ImplicitOAuthFlowSchema>;
 
 /**
  * @description Configuration details for a supported Password OAuth Flow
@@ -290,7 +290,7 @@ export const PasswordOAuthFlowSchema = z
   })
   .describe("Configuration details for a supported Password OAuth Flow");
 
-export type PasswordOAuthFlow = z.infer<typeof PasswordOAuthFlowSchema>;
+export type PasswordOAuthFlow = z.output<typeof PasswordOAuthFlowSchema>;
 
 /**
  * @description The configuration of supported OAuth Flows
@@ -327,7 +327,7 @@ export const OAuthFlowsSchema = z
   })
   .describe("The configuration of supported OAuth Flows");
 
-export type OAuthFlows = z.infer<typeof OAuthFlowsSchema>;
+export type OAuthFlows = z.output<typeof OAuthFlowsSchema>;
 
 /**
  * @description OAuth2 security scheme configuration.
@@ -357,7 +357,7 @@ export const OAuth2SecuritySchemeSchema = SecuritySchemeBaseSchema.extend({
     .optional()
     .describe("URL to the oauth2 authorization server metadata"),
 }).describe("OAuth2 security scheme configuration.");
-export type OAuth2SecurityScheme = z.infer<typeof OAuth2SecuritySchemeSchema>;
+export type OAuth2SecurityScheme = z.output<typeof OAuth2SecuritySchemeSchema>;
 
 /**
  * @description OpenID Connect security scheme.
@@ -375,7 +375,7 @@ export const OpenIdConnectSecuritySchemeSchema =
     openIdConnectUrl: z.string().url(),
   });
 
-export type OpenIdConnectSecurityScheme = z.infer<
+export type OpenIdConnectSecurityScheme = z.output<
   typeof OpenIdConnectSecuritySchemeSchema
 >;
 
@@ -389,7 +389,7 @@ export const MutualTLSSecuritySchemeSchema = SecuritySchemeBaseSchema.extend({
   type: z.literal(SecuritySchemeTypeSchema.enum.mutualTLS),
 });
 
-export type MutualTLSSecurityScheme = z.infer<
+export type MutualTLSSecurityScheme = z.output<
   typeof MutualTLSSecuritySchemeSchema
 >;
 
@@ -401,4 +401,4 @@ export const SecuritySchemeSchema = z.union([
   MutualTLSSecuritySchemeSchema,
 ]);
 
-export type SecurityScheme = z.infer<typeof SecuritySchemeSchema>;
+export type SecurityScheme = z.output<typeof SecuritySchemeSchema>;

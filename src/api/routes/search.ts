@@ -28,7 +28,7 @@ export const CursorSchema = z.object({
 });
 
 /** Type alias for pagination cursor */
-export type SearchCursor = z.infer<typeof CursorSchema>;
+export type SearchCursor = z.output<typeof CursorSchema>;
 
 /**
  * Schema for search request validation.
@@ -45,7 +45,7 @@ export const SearchRequestSchema = APIRequestSchema.extend({
 });
 
 /** Type alias for validated SearchRequest */
-export type SearchRequest = z.infer<typeof SearchRequestSchema>;
+export type SearchRequest = z.output<typeof SearchRequestSchema>;
 
 /**
  * Schema for search response validation.
@@ -62,4 +62,4 @@ export const SearchResponseSchema = APIResponseSchema.extend({
 });
 
 /** Type alias for validated SearchResponse */
-export type SearchResponse = z.infer<typeof SearchResponseSchema>;
+export type SearchResponse = z.output<typeof SearchResponseSchema>;

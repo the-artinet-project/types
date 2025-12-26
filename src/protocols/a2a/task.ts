@@ -30,7 +30,7 @@ export const TaskStateSchema = z
   .describe("Defines the lifecycle states of a Task.");
 
 export const TaskState = TaskStateSchema.enum;
-export type TaskState = z.infer<typeof TaskStateSchema>;
+export type TaskState = z.output<typeof TaskStateSchema>;
 
 /**
  * Basic parameters used for task ID operations.
@@ -44,7 +44,7 @@ export const TaskIdParamsSchema = z
       .describe("Additional metadata to include in the request."),
   })
   .describe("Defines the parameters for a request to get a task.");
-export type TaskIdParams = z.infer<typeof TaskIdParamsSchema>;
+export type TaskIdParams = z.output<typeof TaskIdParamsSchema>;
 
 /**
  * Parameters used for querying task-related information by ID.
@@ -52,7 +52,7 @@ export type TaskIdParams = z.infer<typeof TaskIdParamsSchema>;
 export const TaskQueryParamsSchema = TaskIdParamsSchema.extend({
   historyLength: z.number().optional(),
 });
-export type TaskQueryParams = z.infer<typeof TaskQueryParamsSchema>;
+export type TaskQueryParams = z.output<typeof TaskQueryParamsSchema>;
 
 /**
  * Represents the status of a task at a specific point in time.
@@ -62,7 +62,7 @@ export const TaskStatusSchema = z.object({
   message: MessageSchema.optional(),
   timestamp: z.iso.datetime({ offset: true }).optional(),
 });
-export type TaskStatus = z.infer<typeof TaskStatusSchema>;
+export type TaskStatus = z.output<typeof TaskStatusSchema>;
 
 /**
  * Represents a task being processed by an agent.
@@ -76,7 +76,7 @@ export const TaskSchema = z.object({
   metadata: z.record(z.string(), z.unknown()).optional(),
   kind: z.literal(KindSchema.enum["task"]),
 });
-export type Task = z.infer<typeof TaskSchema>;
+export type Task = z.output<typeof TaskSchema>;
 
 /**
  * Represents a status update event for a task, typically used in streaming scenarios.
@@ -89,7 +89,9 @@ export const TaskStatusUpdateEventSchema = z.object({
   final: z.boolean(),
   metadata: z.record(z.string(), z.unknown()).optional(),
 });
-export type TaskStatusUpdateEvent = z.infer<typeof TaskStatusUpdateEventSchema>;
+export type TaskStatusUpdateEvent = z.output<
+  typeof TaskStatusUpdateEventSchema
+>;
 
 /**
  * Represents an artifact update event for a task, typically used in streaming scenarios.
@@ -103,7 +105,7 @@ export const TaskArtifactUpdateEventSchema = z.object({
   lastChunk: z.boolean().optional(),
   metadata: z.record(z.string(), z.unknown()).optional(),
 });
-export type TaskArtifactUpdateEvent = z.infer<
+export type TaskArtifactUpdateEvent = z.output<
   typeof TaskArtifactUpdateEventSchema
 >;
 
@@ -116,7 +118,7 @@ export const GetTaskRequestSchema = JSONRPCRequestSchema.extend({
     "Defines the parameters for a request to get a task."
   ),
 }).describe("Represents a JSON-RPC request for the `tasks/get` method.");
-export type GetTaskRequest = z.infer<typeof GetTaskRequestSchema>;
+export type GetTaskRequest = z.output<typeof GetTaskRequestSchema>;
 
 /**
  * @description Represents a successful JSON-RPC response for the `tasks/get` method.
@@ -129,7 +131,7 @@ export const GetTaskSuccessResponseSchema = JSONRPCResultResponseSchema.extend({
     "The result of the request, which can be a direct reply Message or the initial Task object."
   ),
 }).describe("JSON-RPC success response model for the 'tasks/get' method.");
-export type GetTaskSuccessResponse = z.infer<
+export type GetTaskSuccessResponse = z.output<
   typeof GetTaskSuccessResponseSchema
 >;
 
@@ -139,7 +141,7 @@ export type GetTaskSuccessResponse = z.infer<
 export const GetTaskResponseSchema = z
   .union([GetTaskSuccessResponseSchema, JSONRPCErrorResponseSchema])
   .describe("Represents a JSON-RPC response for the `tasks/get` method.");
-export type GetTaskResponse = z.infer<typeof GetTaskResponseSchema>;
+export type GetTaskResponse = z.output<typeof GetTaskResponseSchema>;
 
 /**
  * @description Request to re-subscribe to a task's updates.
@@ -152,7 +154,7 @@ export const TaskResubscriptionRequestSchema = JSONRPCRequestSchema.extend({
 }).describe(
   "Represents a JSON-RPC request for the `tasks/resubscribe` method."
 );
-export type TaskResubscriptionRequest = z.infer<
+export type TaskResubscriptionRequest = z.output<
   typeof TaskResubscriptionRequestSchema
 >;
 
@@ -165,7 +167,7 @@ export const CancelTaskRequestSchema = JSONRPCRequestSchema.extend({
     "Defines the parameters for a request to cancel a task."
   ),
 }).describe("Represents a JSON-RPC request for the `tasks/cancel` method.");
-export type CancelTaskRequest = z.infer<typeof CancelTaskRequestSchema>;
+export type CancelTaskRequest = z.output<typeof CancelTaskRequestSchema>;
 
 /**
  * @description Represents a successful JSON-RPC response for the `tasks/cancel` method.
@@ -176,7 +178,7 @@ export const CancelTaskSuccessResponseSchema =
       "The result of the request, which can be a direct reply Message or the initial Task object."
     ),
   }).describe("JSON-RPC success response model for the 'tasks/cancel' method.");
-export type CancelTaskSuccessResponse = z.infer<
+export type CancelTaskSuccessResponse = z.output<
   typeof CancelTaskSuccessResponseSchema
 >;
 
@@ -186,4 +188,4 @@ export type CancelTaskSuccessResponse = z.infer<
 export const CancelTaskResponseSchema = z
   .union([CancelTaskSuccessResponseSchema, JSONRPCErrorResponseSchema])
   .describe("Represents a JSON-RPC response for the `tasks/cancel` method.");
-export type CancelTaskResponse = z.infer<typeof CancelTaskResponseSchema>;
+export type CancelTaskResponse = z.output<typeof CancelTaskResponseSchema>;

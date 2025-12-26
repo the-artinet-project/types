@@ -14,12 +14,12 @@ export const ConnectOptionsSchema = BaseOptionsSchema.extend({
   tools: ToolOptions.optional(),
   agents: AgentOptions.optional(),
 });
-export type ConnectOptions = z.infer<typeof ConnectOptionsSchema>;
+export type ConnectOptions = z.output<typeof ConnectOptionsSchema>;
 
 export const ConnectResponseOptionsSchema = BaseOptionsSchema.extend({
   tools: ToolResponseOptions.optional(),
   agents: AgentResponseOptions.optional(),
 });
-export type ConnectResponseOptions = z.infer<
+export type ConnectResponseOptions = z.output<
   typeof ConnectResponseOptionsSchema
 >;

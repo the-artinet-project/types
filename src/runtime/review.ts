@@ -14,4 +14,4 @@ export const ReviewSchema = z.object({
 });
 
 /** Type alias for validated Review */
-export type Review = z.infer<typeof ReviewSchema>;
+export type Review = z.output<typeof ReviewSchema>;

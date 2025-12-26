@@ -9,7 +9,7 @@ import { AgentCardSchema } from "../../protocols/a2a/agent.js";
 export const BaseCreateAgentRequestSchema = APIRequestSchema.extend({
   agentId: z.string().optional(),
 });
-export type BaseCreateAgentRequest = z.infer<
+export type BaseCreateAgentRequest = z.output<
   typeof BaseCreateAgentRequestSchema
 >;
 
@@ -24,4 +24,4 @@ export const CreateAgentResponseSchema = APIResponseSchema.extend({
     info: AgentCardSchema,
   }),
 });
-export type CreateAgentResponse = z.infer<typeof CreateAgentResponseSchema>;
+export type CreateAgentResponse = z.output<typeof CreateAgentResponseSchema>;

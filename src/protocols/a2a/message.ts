@@ -59,7 +59,7 @@ export const MessageSendConfigurationSchema = z
   .describe(
     "Defines configuration options for a `message/send` or `message/stream` request."
   );
-export type MessageSendConfiguration = z.infer<
+export type MessageSendConfiguration = z.output<
   typeof MessageSendConfigurationSchema
 >;
 
@@ -92,7 +92,7 @@ export const MessageSendParamsSchema = z
   .describe(
     "Defines the parameters for a request to send a message to an agent. This can be used to create a new task, continue an existing one, or restart a task."
   );
-export type MessageSendParams = z.infer<typeof MessageSendParamsSchema>;
+export type MessageSendParams = z.output<typeof MessageSendParamsSchema>;
 
 /**
  * @description Represents a JSON-RPC request for the `message/send` method.
@@ -103,7 +103,7 @@ export const SendMessageRequestSchema = JSONRPCRequestSchema.extend({
     "Defines the parameters for a request to send a message to an agent. This can be used to create a new task, continue an existing one, or restart a task."
   ),
 }).describe("Represents a JSON-RPC request for the `message/send` method.");
-export type SendMessageRequest = z.infer<typeof SendMessageRequestSchema>;
+export type SendMessageRequest = z.output<typeof SendMessageRequestSchema>;
 
 /**
  * @description The result of a message send request, which can be a Message or the initial Task object.
@@ -113,7 +113,7 @@ export const SendMessageSuccessResultSchema = z
   .describe(
     "The result of a message send request, which can be a Message or the initial Task object."
   );
-export type SendMessageSuccessResult = z.infer<
+export type SendMessageSuccessResult = z.output<
   typeof SendMessageSuccessResultSchema
 >;
 /**
@@ -128,7 +128,7 @@ export const SendMessageSuccessResponseSchema =
       "The result of the request, which can be a direct reply Message or the initial Task object."
     ),
   }).describe("JSON-RPC success response model for the 'message/send' method.");
-export type SendMessageSuccessResponse = z.infer<
+export type SendMessageSuccessResponse = z.output<
   typeof SendMessageSuccessResponseSchema
 >;
 
@@ -139,7 +139,7 @@ export const SendMessageResponseSchema = z.union([
   SendMessageSuccessResponseSchema,
   JSONRPCErrorResponseSchema,
 ]);
-export type SendMessageResponse = z.infer<typeof SendMessageResponseSchema>;
+export type SendMessageResponse = z.output<typeof SendMessageResponseSchema>;
 
 /**
  * @description Request to send a message/initiate a task and subscribe to streaming updates.
@@ -152,7 +152,7 @@ export const SendStreamingMessageRequestSchema = JSONRPCRequestSchema.extend({
 }).describe(
   "Request to send a message/initiate a task and subscribe to streaming updates."
 );
-export type SendStreamingMessageRequest = z.infer<
+export type SendStreamingMessageRequest = z.output<
   typeof SendStreamingMessageRequestSchema
 >;
 /**
@@ -168,7 +168,7 @@ export const SendStreamingMessageSuccessResultSchema = z
   .describe(
     "The result of a streaming message request, which can be a Message, Task, or a streaming update/artifact event."
   );
-export type SendStreamingMessageSuccessResult = z.infer<
+export type SendStreamingMessageSuccessResult = z.output<
   typeof SendStreamingMessageSuccessResultSchema
 >;
 /**
@@ -186,7 +186,7 @@ export const SendStreamingMessageSuccessResponseSchema =
   }).describe(
     "Represents a successful JSON-RPC response for the `message/stream` method. The server may send multiple response objects for a single request."
   );
-export type SendStreamingMessageSuccessResponse = z.infer<
+export type SendStreamingMessageSuccessResponse = z.output<
   typeof SendStreamingMessageSuccessResponseSchema
 >;
 
@@ -201,6 +201,6 @@ export const SendStreamingMessageResponseSchema = z
   .describe(
     "Response to a streaming task operation, either through `message/stream` or a subscription."
   );
-export type SendStreamingMessageResponse = z.infer<
+export type SendStreamingMessageResponse = z.output<
   typeof SendStreamingMessageResponseSchema
 >;

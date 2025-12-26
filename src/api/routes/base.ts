@@ -11,7 +11,7 @@ export const APIRequestSchema = BaseSchema.partial({
   requestId: z.string().optional().describe("The request ID"),
   timestamp: z.string().optional().describe("The timestamp"),
 });
-export type APIRequest = z.infer<typeof APIRequestSchema>;
+export type APIRequest = z.output<typeof APIRequestSchema>;
 
 export const APIResponseSchema = BaseSchema.partial({
   id: true,
@@ -27,4 +27,4 @@ export const APIResponseSchema = BaseSchema.partial({
     .describe("Whether the request was successful"),
   error: z.unknown().optional().describe("The error"),
 });
-export type APIResponse = z.infer<typeof APIResponseSchema>;
+export type APIResponse = z.output<typeof APIResponseSchema>;

@@ -30,7 +30,7 @@ export const AgentProviderSchema = z
   })
   .describe("The provider or organization behind an agent.");
 
-export type AgentProvider = z.infer<typeof AgentProviderSchema>;
+export type AgentProvider = z.output<typeof AgentProviderSchema>;
 
 /**
  * @description A declaration of an extension supported by an Agent.
@@ -70,7 +70,7 @@ export const AgentExtensionSchema = z
   })
   .describe("A declaration of an extension supported by an Agent.");
 
-export type AgentExtension = z.infer<typeof AgentExtensionSchema>;
+export type AgentExtension = z.output<typeof AgentExtensionSchema>;
 
 /**
  * @description Defines optional capabilities supported by an agent.
@@ -115,7 +115,7 @@ export const AgentCapabilitiesSchema = z
   })
   .describe("Defines optional capabilities supported by an agent.");
 
-export type AgentCapabilities = z.infer<typeof AgentCapabilitiesSchema>;
+export type AgentCapabilities = z.output<typeof AgentCapabilitiesSchema>;
 
 /**
  * @description Represents a unit of capability that an agent can perform.
@@ -180,7 +180,7 @@ export const AgentSkillSchema = z
   })
   .describe("A unit of capability that an agent can perform.");
 
-export type AgentSkill = z.infer<typeof AgentSkillSchema>;
+export type AgentSkill = z.output<typeof AgentSkillSchema>;
 
 /**
  * @description AgentCardSignature represents a JWS signature of an AgentCard.
@@ -211,7 +211,7 @@ export const AgentCardSignatureSchema = z
   })
   .describe("A JWS signature of an AgentCard.");
 
-export type AgentCardSignature = z.infer<typeof AgentCardSignatureSchema>;
+export type AgentCardSignature = z.output<typeof AgentCardSignatureSchema>;
 
 /**
  * @description An AgentCard conveys key information about an agent's identity,
@@ -369,7 +369,7 @@ export const AgentCardSchema = z
     "An AgentCard conveys key information about an agent's identity, capabilities, skills, authentication requirements, and communication modalities."
   );
 
-export type AgentCard = z.infer<typeof AgentCardSchema>;
+export type AgentCard = z.output<typeof AgentCardSchema>;
 
 /**
  * @description Request to get an authenticated extended card.
@@ -386,7 +386,7 @@ export const GetAuthenticatedExtendedCardRequestSchema =
   }).describe(
     "Represents a JSON-RPC request for the `agent/getAuthenticatedExtendedCard` method."
   );
-export type GetAuthenticatedExtendedCardRequest = z.infer<
+export type GetAuthenticatedExtendedCardRequest = z.output<
   typeof GetAuthenticatedExtendedCardRequestSchema
 >;
 
@@ -402,7 +402,7 @@ export const GetAuthenticatedExtendedCardSuccessResponseSchema =
   }).describe(
     "JSON-RPC success response model for the 'agent/getAuthenticatedExtendedCard' method."
   );
-export type GetAuthenticatedExtendedCardSuccessResponse = z.infer<
+export type GetAuthenticatedExtendedCardSuccessResponse = z.output<
   typeof GetAuthenticatedExtendedCardSuccessResponseSchema
 >;
 
@@ -415,6 +415,6 @@ export const GetAuthenticatedExtendedCardResponseSchema = z
     JSONRPCErrorResponseSchema,
   ])
   .describe("Response to a `agent/getAuthenticatedExtendedCard` request.");
-export type GetAuthenticatedExtendedCardResponse = z.infer<
+export type GetAuthenticatedExtendedCardResponse = z.output<
   typeof GetAuthenticatedExtendedCardResponseSchema
 >;

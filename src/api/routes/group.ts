@@ -19,7 +19,7 @@ export const CreateGroupRequestSchema = APIRequestSchema.extend({
 });
 
 /** Type alias for validated GroupRequest */
-export type CreateGroupRequest = z.infer<typeof CreateGroupRequestSchema>;
+export type CreateGroupRequest = z.output<typeof CreateGroupRequestSchema>;
 export type GroupRequest = CreateGroupRequest;
 /**
  * Schema for group operation responses.
@@ -32,5 +32,5 @@ export const CreateGroupResponseSchema = APIResponseSchema.extend({
 });
 
 /** Type alias for validated GroupResponse */
-export type CreateGroupResponse = z.infer<typeof CreateGroupResponseSchema>;
+export type CreateGroupResponse = z.output<typeof CreateGroupResponseSchema>;
 export type GroupResponse = CreateGroupResponse;

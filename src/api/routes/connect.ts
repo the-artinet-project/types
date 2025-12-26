@@ -9,6 +9,7 @@ import {
   ConnectResponseOptionsSchema,
 } from "../options/index.js";
 import { APIRequestSchema, APIResponseSchema } from "./base.js";
+import * as Completion from "../../experimental/xp.js";
 
 export const ConnectRequestSchema = APIRequestSchema.extend({
   identifier: z.string(),
@@ -16,7 +17,7 @@ export const ConnectRequestSchema = APIRequestSchema.extend({
   preferredEndpoint: z.string(),
   options: ConnectOptionsSchema.optional(),
 });
-export type ConnectRequest = z.infer<typeof ConnectRequestSchema>;
+export type ConnectRequest = z.output<typeof ConnectRequestSchema>;
 export const isConnectRequest = (
   request: unknown
 ): request is ConnectRequest => {
@@ -26,9 +27,9 @@ export const isConnectRequest = (
 export const ConnectResponseSchema = APIResponseSchema.required({
   timestamp: true,
 }).extend({
-  agentResponse: z.union([z.string(), MessageSchema]),
+  message: z.union([MessageSchema, Completion.MessageSchema]),
   systemMessage: z.string().optional(),
   error: z.any().optional(),
   options: ConnectResponseOptionsSchema.optional(),
 });
-export type ConnectResponse = z.infer<typeof ConnectResponseSchema>;
+export type ConnectResponse = z.output<typeof ConnectResponseSchema>;

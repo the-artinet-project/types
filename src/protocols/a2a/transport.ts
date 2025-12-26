@@ -10,7 +10,7 @@ import { z } from "zod/v4";
  */
 export const TransportProtocolSchema = z.enum(["JSONRPC", "GRPC", "HTTP+JSON"]);
 
-export type TransportProtocol = z.infer<typeof TransportProtocolSchema>;
+export type TransportProtocol = z.output<typeof TransportProtocolSchema>;
 
 /**
  * @description Declares a combination of a target URL and a transport protocol for interacting with the agent.
@@ -35,4 +35,4 @@ export const AgentInterfaceSchema = z.object({
     .describe("The transport protocol supported at this URL."),
 });
 
-export type AgentInterface = z.infer<typeof AgentInterfaceSchema>;
+export type AgentInterface = z.output<typeof AgentInterfaceSchema>;

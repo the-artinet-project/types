@@ -17,10 +17,10 @@ export const AgentOptions = z.object({
     .optional()
     .describe("A list of responses to agent requests."),
 });
-export type AgentOptions = z.infer<typeof AgentOptions>;
+export type AgentOptions = z.output<typeof AgentOptions>;
 
 export const AgentResponseOptions = z.object({
   requests: z.array(AgentRequestSchema).optional(),
   responses: z.array(AgentResponseSchema).optional(),
 });
-export type AgentResponseOptions = z.infer<typeof AgentResponseOptions>;
+export type AgentResponseOptions = z.output<typeof AgentResponseOptions>;

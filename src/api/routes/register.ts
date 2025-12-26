@@ -16,7 +16,7 @@ export const CreateRegistrationRequestSchema = APIRequestSchema.extend({
 });
 
 /** Type alias for validated RegistrationRequest */
-export type CreateRegistrationRequest = z.infer<
+export type CreateRegistrationRequest = z.output<
   typeof CreateRegistrationRequestSchema
 >;
 export type RegistrationRequest = CreateRegistrationRequest;
@@ -33,7 +33,7 @@ export const CreateRegistrationResponseSchema = APIResponseSchema.extend({
 });
 
 /** Type alias for validated RegistrationResponse */
-export type CreateRegistrationResponse = z.infer<
+export type CreateRegistrationResponse = z.output<
   typeof CreateRegistrationResponseSchema
 >;
 export type RegistrationResponse = CreateRegistrationResponse;

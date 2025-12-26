@@ -13,10 +13,10 @@ export const ToolOptions = z.object({
   services: z.array(ToolServiceSchema).optional(),
   responses: z.array(ToolResponseSchema).optional(),
 });
-export type ToolOptions = z.infer<typeof ToolOptions>;
+export type ToolOptions = z.output<typeof ToolOptions>;
 
 export const ToolResponseOptions = z.object({
   requests: z.array(ToolRequestSchema),
   responses: z.array(ToolResponseSchema),
 });
-export type ToolResponseOptions = z.infer<typeof ToolResponseOptions>;
+export type ToolResponseOptions = z.output<typeof ToolResponseOptions>;

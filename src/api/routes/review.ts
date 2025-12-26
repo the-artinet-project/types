@@ -21,7 +21,7 @@ export const CreateReviewRequestSchema = APIRequestSchema.extend({
 });
 
 /** Type alias for validated ReviewRequest */
-export type CreateReviewRequest = z.infer<typeof CreateReviewRequestSchema>;
+export type CreateReviewRequest = z.output<typeof CreateReviewRequestSchema>;
 export type ReviewRequest = CreateReviewRequest;
 /**
  * Schema for review response validation.
@@ -34,5 +34,5 @@ export const CreateReviewResponseSchema = APIResponseSchema.extend({
 });
 
 /** Type alias for validated ReviewResponse */
-export type CreateReviewResponse = z.infer<typeof CreateReviewResponseSchema>;
+export type CreateReviewResponse = z.output<typeof CreateReviewResponseSchema>;
 export type ReviewResponse = CreateReviewResponse;

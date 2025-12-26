@@ -14,6 +14,6 @@ export const JSONRPCSuccessResponseSchema = JSONRPCResultResponseSchema;
  * @deprecated Use JSONRPCResultResponse instead.
  * @description Represents a JSON-RPC 2.0 Success Response object.
  */
-export type JSONRPCSuccessResponse = z.infer<
+export type JSONRPCSuccessResponse = z.output<
   typeof JSONRPCSuccessResponseSchema
 >;

@@ -22,4 +22,4 @@ export const KindSchema = z
     "Represents the type of event that occurred in the context of a task."
   );
 export const Kind = KindSchema.enum;
-export type Kind = z.infer<typeof KindSchema>;
+export type Kind = z.output<typeof KindSchema>;

@@ -31,6 +31,6 @@ export const GroupSchema = z.object({
 });
 
 /** Type alias for validated Group */
-export type Group = z.infer<typeof GroupSchema>;
+export type Group = z.output<typeof GroupSchema>;
 export const isGroup = (value: unknown): value is Group =>
   GroupSchema.safeParse(value).success;

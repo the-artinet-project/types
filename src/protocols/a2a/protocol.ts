@@ -66,5 +66,5 @@ export const A2AResponseSchema = z.union([
   GetAuthenticatedExtendedCardResponseSchema,
 ]);
 
-export type A2ARequest = z.infer<typeof A2ARequestSchema>;
-export type A2AResponse = z.infer<typeof A2AResponseSchema>;
+export type A2ARequest = z.output<typeof A2ARequestSchema>;
+export type A2AResponse = z.output<typeof A2AResponseSchema>;

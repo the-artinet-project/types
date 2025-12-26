@@ -22,7 +22,7 @@ export const GetTaskPushNotificationConfigParamSchema =
     pushNotificationConfigId: z.string().optional(),
   });
 
-export type GetTaskPushNotificationConfigParam = z.infer<
+export type GetTaskPushNotificationConfigParam = z.output<
   typeof GetTaskPushNotificationConfigParamSchema
 >;
 
@@ -30,7 +30,7 @@ export const GetTaskPushNotificationConfigParamsSchema = z.union([
   GetTaskPushNotificationConfigParamSchema,
   TaskIdParamsSchema,
 ]);
-export type GetTaskPushNotificationConfigParams = z.infer<
+export type GetTaskPushNotificationConfigParams = z.output<
   typeof GetTaskPushNotificationConfigParamsSchema
 >;
 
@@ -40,7 +40,7 @@ export type GetTaskPushNotificationConfigParams = z.infer<
 export const ListTaskPushNotificationConfigsParamsSchema =
   TaskIdParamsSchema.extend({});
 
-export type ListTaskPushNotificationConfigsParams = z.infer<
+export type ListTaskPushNotificationConfigsParams = z.output<
   typeof ListTaskPushNotificationConfigsParamsSchema
 >;
 
@@ -55,7 +55,7 @@ export const DeleteTaskPushNotificationConfigParamsSchema =
     pushNotificationConfigId: z.string(),
   });
 
-export type DeleteTaskPushNotificationConfigParams = z.infer<
+export type DeleteTaskPushNotificationConfigParams = z.output<
   typeof DeleteTaskPushNotificationConfigParamsSchema
 >;
 
@@ -77,7 +77,7 @@ export const PushNotificationAuthenticationInfoSchema = z
   })
   .describe("Defines authentication details for a push notification endpoint.");
 
-export type PushNotificationAuthenticationInfo = z.infer<
+export type PushNotificationAuthenticationInfo = z.output<
   typeof PushNotificationAuthenticationInfoSchema
 >;
 
@@ -125,7 +125,7 @@ export const PushNotificationConfigSchema = z
   .describe(
     "Defines the configuration for setting up push notifications for task updates."
   );
-export type PushNotificationConfig = z.infer<
+export type PushNotificationConfig = z.output<
   typeof PushNotificationConfigSchema
 >;
 
@@ -152,7 +152,7 @@ export const TaskPushNotificationConfigSchema = z
   .describe(
     "A container associating a push notification configuration with a specific task."
   );
-export type TaskPushNotificationConfig = z.infer<
+export type TaskPushNotificationConfig = z.output<
   typeof TaskPushNotificationConfigSchema
 >;
 
@@ -168,7 +168,7 @@ export const SetTaskPushNotificationConfigRequestSchema =
   }).describe(
     "Represents a JSON-RPC request for the `tasks/pushNotificationConfig/set` method."
   );
-export type SetTaskPushNotificationConfigRequest = z.infer<
+export type SetTaskPushNotificationConfigRequest = z.output<
   typeof SetTaskPushNotificationConfigRequestSchema
 >;
 
@@ -186,7 +186,7 @@ export const SetTaskPushNotificationConfigSuccessResponseSchema =
   }).describe(
     "JSON-RPC success response model for the 'tasks/pushNotificationConfig/set' method."
   );
-export type SetTaskPushNotificationConfigSuccessResponse = z.infer<
+export type SetTaskPushNotificationConfigSuccessResponse = z.output<
   typeof SetTaskPushNotificationConfigSuccessResponseSchema
 >;
 
@@ -199,7 +199,7 @@ export const SetTaskPushNotificationConfigResponseSchema = z
     JSONRPCErrorResponseSchema,
   ])
   .describe("Response to a `tasks/pushNotificationConfig/set` request.");
-export type SetTaskPushNotificationConfigResponse = z.infer<
+export type SetTaskPushNotificationConfigResponse = z.output<
   typeof SetTaskPushNotificationConfigResponseSchema
 >;
 
@@ -215,7 +215,7 @@ export const GetTaskPushNotificationConfigRequestSchema =
   }).describe(
     "Represents a JSON-RPC request for the `tasks/pushNotificationConfig/get` method."
   );
-export type GetTaskPushNotificationConfigRequest = z.infer<
+export type GetTaskPushNotificationConfigRequest = z.output<
   typeof GetTaskPushNotificationConfigRequestSchema
 >;
 
@@ -233,7 +233,7 @@ export const GetTaskPushNotificationConfigSuccessResponseSchema =
   }).describe(
     "JSON-RPC success response model for the 'tasks/pushNotificationConfig/get' method."
   );
-export type GetTaskPushNotificationConfigSuccessResponse = z.infer<
+export type GetTaskPushNotificationConfigSuccessResponse = z.output<
   typeof GetTaskPushNotificationConfigSuccessResponseSchema
 >;
 
@@ -246,7 +246,7 @@ export const GetTaskPushNotificationConfigResponseSchema = z
     JSONRPCErrorResponseSchema,
   ])
   .describe("Response to a `tasks/pushNotificationConfig/get` request.");
-export type GetTaskPushNotificationConfigResponse = z.infer<
+export type GetTaskPushNotificationConfigResponse = z.output<
   typeof GetTaskPushNotificationConfigResponseSchema
 >;
 
@@ -262,14 +262,14 @@ export const ListTaskPushNotificationConfigRequestSchema =
   }).describe(
     "Represents a JSON-RPC request for the `tasks/pushNotificationConfig/list` method."
   );
-export type ListTaskPushNotificationConfigRequest = z.infer<
+export type ListTaskPushNotificationConfigRequest = z.output<
   typeof ListTaskPushNotificationConfigRequestSchema
 >;
 
 export const ListTaskPushNotificationConfigResultSchema = z
   .array(TaskPushNotificationConfigSchema)
   .describe("The list of push notification configurations.");
-export type ListTaskPushNotificationConfigResult = z.infer<
+export type ListTaskPushNotificationConfigResult = z.output<
   typeof ListTaskPushNotificationConfigResultSchema
 >;
 
@@ -287,7 +287,7 @@ export const ListTaskPushNotificationConfigSuccessResponseSchema =
   }).describe(
     "JSON-RPC success response model for the 'tasks/pushNotificationConfig/list' method."
   );
-export type ListTaskPushNotificationConfigSuccessResponse = z.infer<
+export type ListTaskPushNotificationConfigSuccessResponse = z.output<
   typeof ListTaskPushNotificationConfigSuccessResponseSchema
 >;
 
@@ -300,7 +300,7 @@ export const ListTaskPushNotificationConfigResponseSchema = z
     JSONRPCErrorResponseSchema,
   ])
   .describe("Response to a `tasks/pushNotificationConfig/list` request.");
-export type ListTaskPushNotificationConfigResponse = z.infer<
+export type ListTaskPushNotificationConfigResponse = z.output<
   typeof ListTaskPushNotificationConfigResponseSchema
 >;
 
@@ -316,7 +316,7 @@ export const DeleteTaskPushNotificationConfigRequestSchema =
   }).describe(
     "Represents a JSON-RPC request for the `tasks/pushNotificationConfig/delete` method."
   );
-export type DeleteTaskPushNotificationConfigRequest = z.infer<
+export type DeleteTaskPushNotificationConfigRequest = z.output<
   typeof DeleteTaskPushNotificationConfigRequestSchema
 >;
 
@@ -332,7 +332,7 @@ export const DeleteTaskPushNotificationConfigSuccessResponseSchema =
   }).describe(
     "JSON-RPC success response model for the 'tasks/pushNotificationConfig/delete' method."
   );
-export type DeleteTaskPushNotificationConfigSuccessResponse = z.infer<
+export type DeleteTaskPushNotificationConfigSuccessResponse = z.output<
   typeof DeleteTaskPushNotificationConfigSuccessResponseSchema
 >;
 
@@ -345,6 +345,6 @@ export const DeleteTaskPushNotificationConfigResponseSchema = z
     JSONRPCErrorResponseSchema,
   ])
   .describe("Response to a `tasks/pushNotificationConfig/delete` request.");
-export type DeleteTaskPushNotificationConfigResponse = z.infer<
+export type DeleteTaskPushNotificationConfigResponse = z.output<
   typeof DeleteTaskPushNotificationConfigResponseSchema
 >;

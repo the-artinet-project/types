@@ -7,4 +7,4 @@ import z from "zod/v4";
 export const BaseOptionsSchema = z.object({
   params: z.record(z.string(), z.unknown()).optional(),
 });
-export type BaseOptions = z.infer<typeof BaseOptionsSchema>;
+export type BaseOptions = z.output<typeof BaseOptionsSchema>;

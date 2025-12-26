@@ -19,7 +19,7 @@ export const FindRequestSchema = APIRequestSchema.extend({
 });
 
 /** Type alias for validated FindRequest */
-export type FindRequest = z.infer<typeof FindRequestSchema>;
+export type FindRequest = z.output<typeof FindRequestSchema>;
 
 /**
  * Schema for find response validation.
@@ -36,6 +36,4 @@ export const FindResponseSchema = APIResponseSchema.extend({
 });
 
 /** Type alias for validated FindResponse */
-export type FindResponse = z.infer<typeof FindResponseSchema>;
-
-// TODO: Move above schemas to @artinet/types
+export type FindResponse = z.output<typeof FindResponseSchema>;

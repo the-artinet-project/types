@@ -15,7 +15,7 @@ export const EndpointSchema = z.object({
     .optional(),
   additionalProperties: z.unknown().optional(),
 });
-export type Endpoint = z.infer<typeof EndpointSchema>;
+export type Endpoint = z.output<typeof EndpointSchema>;
 
 export const CommunicationSchema = z.object({
   endpoints: z.array(EndpointSchema),
@@ -24,7 +24,7 @@ export const CommunicationSchema = z.object({
     .describe("Custom communication configurations")
     .optional(),
 });
-export type Communication = z.infer<typeof CommunicationSchema>;
+export type Communication = z.output<typeof CommunicationSchema>;
 
 export const BillingSchema = z.object({
   walletAddress: z
@@ -46,14 +46,14 @@ export const BillingSchema = z.object({
     .describe("Additional billing-specific information")
     .optional(),
 });
-export type Billing = z.infer<typeof BillingSchema>;
+export type Billing = z.output<typeof BillingSchema>;
 
 export const RSAKeySchema = z.object({
   kty: z.literal("RSA").optional(),
   n: z.string().describe("RSA modulus"),
   e: z.string().describe("RSA public exponent"),
 });
-export type RSAKey = z.infer<typeof RSAKeySchema>;
+export type RSAKey = z.output<typeof RSAKeySchema>;
 
 export const ECKeySchema = z.object({
   kty: z.literal("EC").optional(),
@@ -63,7 +63,7 @@ export const ECKeySchema = z.object({
   x: z.string().describe("X coordinate for EC keys"),
   y: z.string().describe("Y coordinate for EC keys"),
 });
-export type ECKey = z.infer<typeof ECKeySchema>;
+export type ECKey = z.output<typeof ECKeySchema>;
 
 export const PublicKeySchema = z
   .object({
@@ -94,33 +94,33 @@ export const PublicKeySchema = z
       }
     })
   );
-export type PublicKey = z.infer<typeof PublicKeySchema>;
+export type PublicKey = z.output<typeof PublicKeySchema>;
 
 export const SchemaVersionSchema = z
   .string()
   .regex(new RegExp("^\\d+\\.\\d+\\.\\d+$"))
   .describe("Version of the registration schema")
   .default("1.0.1");
-export type SchemaVersion = z.infer<typeof SchemaVersionSchema>;
+export type SchemaVersion = z.output<typeof SchemaVersionSchema>;
 
 export const ServiceNameSchema = z
   .string()
   .regex(new RegExp("^[a-zA-Z0-9-_./ ]+$"))
   .max(128)
   .describe("Human-readable name of the service");
-export type ServiceName = z.infer<typeof ServiceNameSchema>;
+export type ServiceName = z.output<typeof ServiceNameSchema>;
 
 export const DescriptionSchema = z
   .string()
   .max(500)
   .describe("Brief description of the service's functionality");
-export type Description = z.infer<typeof DescriptionSchema>;
+export type Description = z.output<typeof DescriptionSchema>;
 
 export const VersionSchema = z
   .string()
   .regex(new RegExp("^\\d+\\.\\d+\\.\\d+$"))
   .describe("Version of the service (semantic versioning)");
-export type Version = z.infer<typeof VersionSchema>;
+export type Version = z.output<typeof VersionSchema>;
 
 export const CapabilitiesSchema = z
   .array(
@@ -132,7 +132,7 @@ export const CapabilitiesSchema = z
   )
   .max(5)
   .describe("List of functionalities or features provided by the service");
-export type Capabilities = z.infer<typeof CapabilitiesSchema>;
+export type Capabilities = z.output<typeof CapabilitiesSchema>;
 
 export const TagsSchema = z
   .array(
@@ -145,7 +145,7 @@ export const TagsSchema = z
       .regex(new RegExp("^[a-zA-Z0-9-_:+./\\s ]+$"))
   )
   .describe("List of tags for the service");
-export type Tags = z.infer<typeof TagsSchema>;
+export type Tags = z.output<typeof TagsSchema>;
 
 //TODO: Add License Schema
 export const RegistrationSchema = z
@@ -171,4 +171,4 @@ export const RegistrationSchema = z
     ).optional(),
   })
   .describe("JSON Schema for Artinet Registrations");
-export type Registration = z.infer<typeof RegistrationSchema>;
+export type Registration = z.output<typeof RegistrationSchema>;
