@@ -33,7 +33,6 @@ export const ToolServerSchema = ServiceConfigSchema.extend({
    */
   uri: z.string().describe("The URI of the tool/function name."),
   type: z.literal("mcp").default("mcp"),
-  //This is optional because Servers may not have an info object on instantiation.
   info: ToolInfoSchema.describe("The info of the tool."),
 });
 export type ToolServer = z.output<typeof ToolServerSchema>;

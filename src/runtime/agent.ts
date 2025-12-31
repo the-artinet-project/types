@@ -26,8 +26,7 @@ export const isAgentInfo = (info: any): info is AgentInfo =>
 export const AgentServerSchema = ServerSchema.extend({
   uri: z.string().describe("The URI of the agent."),
   type: z.literal("a2a").default("a2a"),
-  //This is optional because Servers may not have an info object on instantiation.
-  info: AgentInfoSchema.optional().describe("The info of the agent."),
+  info: AgentInfoSchema.describe("The info of the agent."),
 });
 export type AgentServer = z.output<typeof AgentServerSchema>;
 
@@ -67,14 +66,17 @@ export const isAgentInstance = (agent: unknown): agent is AgentInstance =>
 export const isAgentService = (service: unknown): service is AgentService =>
   AgentServiceSchema.safeParse(service).success;
 
-export const AgentCallSchema = AgentInstanceSchema.partial({
-  info: true,
-}).extend({
-  id: z.string().describe("The ID of the agent call."),
-  call: z
-    .union([MessageSchema, z.string()])
-    .describe("The message being sent to the agent."),
-});
+export const AgentCallSchema = AgentInstanceSchema.required({
+  id: true,
+})
+  .partial({
+    info: true,
+  })
+  .extend({
+    call: z
+      .union([MessageSchema, z.string()])
+      .describe("The message being sent to the agent."),
+  });
 export type AgentCall = z.output<typeof AgentCallSchema>;
 
 //A structure suitable for transporting calls across runtime boundaries
