@@ -1,6 +1,6 @@
 {
   "name": "@artinet/types",
-  "version": "0.0.9-alpha.4",
+  "version": "0.0.9",
   "author": "artinet",
   "license": "Apache-2.0",
   "description": "A collection of useful types for the artinet.",

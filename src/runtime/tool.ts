@@ -11,7 +11,11 @@ export const ToolInfoSchema = BaseSchema.partial({
   id: true,
 })
   .extend({
-    uri: z.string().describe("The URI of the tool."),
+    /**
+     * The URI of the agent.
+     * We prefer uri over id, as a network level identifier, because it has broad applicability.
+     */
+    uri: z.string().optional().describe("The URI of the tool."),
     implementation: MCP.ImplementationSchema,
     serverCapabilities: MCP.ServerCapabilitiesSchema,
     tools: z.array(MCP.ToolSchema),
@@ -29,7 +33,7 @@ export const isToolInfo = (info: any): info is ToolInfo => {
 export const ToolServerSchema = ServiceConfigSchema.extend({
   /**
    * The URI of the tool/function.
-   * We use uri because it has broad applicability.
+   * We prefer uri over id, as a network level identifier, because it has broad applicability.
    */
   uri: z.string().describe("The URI of the tool/function name."),
   type: z.literal("mcp").default("mcp"),
@@ -63,10 +67,7 @@ export const ToolInstanceSchema = ToolServerSchema.partial({
   arguments: ToolInstanceArgumentsSchema.optional().describe(
     "The arguments to be used to start the tool."
   ),
-  info: ToolInfoSchema.partial().required({
-    uri: true,
-    implementation: true,
-  }),
+  info: ToolInfoSchema.partial().optional(),
 });
 export type ToolInstance = z.output<typeof ToolInstanceSchema>;
 /**

@@ -4,7 +4,7 @@
  */
 import z from "zod/v4";
 import { BaseSchema, CallerIdSchema, WithKindSchema } from "../base.js";
-import { ServerSchema } from "./server.js";
+import { ServiceConfigSchema } from "./server.js";
 import { MessageSchema, TaskSchema } from "../protocols/a2a/index.js";
 import { AgentCardSchema } from "../protocols/a2a/agent.js";
 
@@ -12,7 +12,11 @@ export const AgentInfoSchema = BaseSchema.partial({
   id: true,
 })
   .extend({
-    uri: z.string().describe("The URI of the agent."),
+    /**
+     * The URI of the agent.
+     * We prefer uri over id, as a network level identifier, because it has broad applicability.
+     */
+    uri: z.string().optional().describe("The URI of the agent."),
   })
   .extend(AgentCardSchema.shape).describe(`
 Agent Info Schema:
@@ -23,7 +27,11 @@ export type AgentInfo = z.output<typeof AgentInfoSchema>;
 export const isAgentInfo = (info: any): info is AgentInfo =>
   AgentInfoSchema.safeParse(info).success;
 
-export const AgentServerSchema = ServerSchema.extend({
+export const AgentServerSchema = ServiceConfigSchema.extend({
+  /**
+   * The URI of the agent.
+   * We prefer uri over id, as a network level identifier, because it has broad applicability.
+   */
   uri: z.string().describe("The URI of the agent."),
   type: z.literal("a2a").default("a2a"),
   info: AgentInfoSchema.describe("The info of the agent."),
