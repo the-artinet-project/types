@@ -34,7 +34,7 @@ import {
   ListTaskPushNotificationConfigResponseSchema,
   TaskPushNotificationConfigSchema,
   GetTaskPushNotificationConfigParamsSchema,
-  ListTaskPushNotificationConfigsParamsSchema,
+  ListTaskPushNotificationConfigParamsSchema,
   DeleteTaskPushNotificationConfigParamsSchema,
   ListTaskPushNotificationConfigResultSchema,
 } from "./notification.js";
@@ -67,7 +67,7 @@ export const RequestParamSchema = z.union([
   TaskQueryParamsSchema,
   TaskPushNotificationConfigSchema,
   GetTaskPushNotificationConfigParamsSchema,
-  ListTaskPushNotificationConfigsParamsSchema,
+  ListTaskPushNotificationConfigParamsSchema,
   DeleteTaskPushNotificationConfigParamsSchema,
   z.null(),
 ]);

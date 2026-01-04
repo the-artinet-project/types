@@ -37,11 +37,11 @@ export type GetTaskPushNotificationConfigParams = z.output<
 /**
  * Defines parameters for listing all push notification configurations for a task.
  */
-export const ListTaskPushNotificationConfigsParamsSchema =
+export const ListTaskPushNotificationConfigParamsSchema =
   TaskIdParamsSchema.extend({});
 
-export type ListTaskPushNotificationConfigsParams = z.output<
-  typeof ListTaskPushNotificationConfigsParamsSchema
+export type ListTaskPushNotificationConfigParams = z.output<
+  typeof ListTaskPushNotificationConfigParamsSchema
 >;
 
 /**
@@ -256,7 +256,7 @@ export type GetTaskPushNotificationConfigResponse = z.output<
 export const ListTaskPushNotificationConfigRequestSchema =
   JSONRPCRequestSchema.extend({
     method: z.literal("tasks/pushNotificationConfig/list"),
-    params: ListTaskPushNotificationConfigsParamsSchema.describe(
+    params: ListTaskPushNotificationConfigParamsSchema.describe(
       "Defines the parameters for a request to list all push notification configurations for a task."
     ),
   }).describe(
