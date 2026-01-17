@@ -6,8 +6,7 @@ import { z } from "zod/v4";
 import { BaseSchema } from "../base.js";
 
 export const ServerConfigSchema = BaseSchema.extend({
-  url: z.string().url(), //todo: will need to remove .url() when migrating to zod/v4
-}).extend({
+  url: z.url().describe("The URL of the server."),
   headers: z
     .record(z.string(), z.string())
     .optional()
