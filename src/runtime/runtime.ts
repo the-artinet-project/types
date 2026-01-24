@@ -1,5 +1,6 @@
 export * from "./agent.js";
 export * from "./tool.js";
+export type * as ToolUtils from "./tool-utils.js";
 export * from "./server.js";
 export * from "./group.js";
 export * from "./review.js";
