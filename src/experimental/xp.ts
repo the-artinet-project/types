@@ -28,6 +28,25 @@ export const Role = RoleSchema.enum;
 /**
  * @deprecated This is an experimental type, subject to rapid modification and its location will change.
  */
+export const FunctionSchema = BaseSchema.required().extend({
+  type: z.literal("function"),
+  function: z.object({
+    name: z.string().regex(/^[a-zA-Z0-9_-]+$/).max(64).describe("The name of the function to be called. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64."),
+    description: z.string().optional().describe("A description of what the function does, used by the model to choose when and how to call the function."),
+    parameters: z.record(z.string(), z.unknown()).optional().describe("The parameters the functions accepts, described as a JSON Schema object. See the [guide](https://platform.openai.com/docs/guides/function-calling) for examples, and the [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for documentation about the format."),
+  }),
+}).describe("A function tool that can be used to generate a response.");
+/**
+ * @deprecated This is an experimental type, subject to rapid modification and its location will change.
+ */
+export type Function = z.output<typeof FunctionSchema>;
+export const isFunction = (func: unknown): func is Function => {
+  return FunctionSchema.safeParse(func).success;
+}
+
+/**
+ * @deprecated This is an experimental type, subject to rapid modification and its location will change.
+ */
 export const FunctionCallSchema = BaseSchema.required().extend({
   type: z.literal("function"),
   function: z.object({
@@ -35,6 +54,7 @@ export const FunctionCallSchema = BaseSchema.required().extend({
     arguments: z.string(),
   }),
 });
+
 /**
  * @deprecated This is an experimental type, subject to rapid modification and its location will change.
  */
@@ -52,6 +72,7 @@ export const CustomToolCallSchema = BaseSchema.extend({
     name: z.string(),
   }),
 });
+
 /**
  * @deprecated This is an experimental type, subject to rapid modification and its location will change.
  */
