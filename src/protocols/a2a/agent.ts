@@ -243,7 +243,6 @@ export const AgentCardSchema = z
      * @required The preferred endpoint URL for interacting with the agent.
      */
     url: z
-      .string()
       .url()
       .describe("The preferred endpoint URL for interacting with the agent."),
 
@@ -269,7 +268,6 @@ export const AgentCardSchema = z
      * @optional The URL of the agent's icon.
      */
     iconUrl: z
-      .string()
       .url()
       .optional()
       .describe("The URL of the agent's icon."),
@@ -292,7 +290,6 @@ export const AgentCardSchema = z
      * @optional An optional URL pointing to the agent's documentation.
      */
     documentationUrl: z
-      .string()
       .url()
       .optional()
       .describe("An optional URL pointing to the agent's documentation."),
