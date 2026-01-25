@@ -1,74 +1,73 @@
 {
-  "name": "@artinet/types",
-  "version": "0.1.4",
-  "author": "artinet",
-  "license": "Apache-2.0",
-  "description": "A collection of useful types for the artinet.",
-  "homepage": "https://artinet.io",
-  "keywords": [
-    "artinet",
-    "agent",
-    "artificial intelligence",
-    "ai",
-    "types"
-  ],
-  "files": [
-    "dist",
-    "package.json",
-    "LICENSE"
-  ],
-  "bugs": {
-    "url": "https://github.com/the-artinet-project/types/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/the-artinet-project/types.git"
-  },
-  "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "module": "./dist/index.js",
-  "scripts": {
-    "build": "tsc",
-    "build:release": "tsup --config tsup.config.ts"
-  },
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "default": "./dist/index.js"
+    "name": "@artinet/types",
+    "version": "0.1.5",
+    "author": "artinet",
+    "license": "Apache-2.0",
+    "description": "A collection of useful types for the artinet.",
+    "homepage": "https://artinet.io",
+    "keywords": [
+        "artinet",
+        "agent",
+        "artificial intelligence",
+        "ai",
+        "types"
+    ],
+    "files": [
+        "dist",
+        "package.json",
+        "LICENSE"
+    ],
+    "bugs": {
+        "url": "https://github.com/the-artinet-project/types/issues"
     },
-    "./api": {
-      "types": "./dist/api/index.d.ts",
-      "import": "./dist/api/index.js",
-      "default": "./dist/api/index.js"
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/the-artinet-project/types.git"
     },
-    "./runtime": {
-      "types": "./dist/runtime/index.d.ts",
-      "import": "./dist/runtime/index.js",
-      "default": "./dist/runtime/index.js"
+    "type": "module",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "module": "./dist/index.js",
+    "scripts": {
+        "build": "tsc"
     },
-    "./a2a": {
-      "types": "./dist/protocols/a2a/index.d.ts",
-      "import": "./dist/protocols/a2a/index.js",
-      "default": "./dist/protocols/a2a/index.js"
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js",
+            "default": "./dist/index.js"
+        },
+        "./api": {
+            "types": "./dist/api/index.d.ts",
+            "import": "./dist/api/index.js",
+            "default": "./dist/api/index.js"
+        },
+        "./runtime": {
+            "types": "./dist/runtime/index.d.ts",
+            "import": "./dist/runtime/index.js",
+            "default": "./dist/runtime/index.js"
+        },
+        "./a2a": {
+            "types": "./dist/protocols/a2a/index.d.ts",
+            "import": "./dist/protocols/a2a/index.js",
+            "default": "./dist/protocols/a2a/index.js"
+        },
+        "./mcp": {
+            "types": "./dist/protocols/mcp/index.d.ts",
+            "import": "./dist/protocols/mcp/index.js",
+            "default": "./dist/protocols/mcp/index.js"
+        }
     },
-    "./mcp": {
-      "types": "./dist/protocols/mcp/index.d.ts",
-      "import": "./dist/protocols/mcp/index.js",
-      "default": "./dist/protocols/mcp/index.js"
+    "dependencies": {
+        "zod": "^3.25"
+    },
+    "peerDependencies": {
+        "@modelcontextprotocol/sdk": "^1.24.3"
+    },
+    "devDependencies": {
+        "typescript": "^5.9.3"
+    },
+    "engines": {
+        "node": ">=20.0.0"
     }
-  },
-  "dependencies": {
-    "zod": "^3.25"
-  },
-  "peerDependencies": {
-    "@modelcontextprotocol/sdk": "^1.24.3"
-  },
-  "devDependencies": {
-    "typescript": "^5.9.3"
-  },
-  "engines": {
-    "node": ">=20.0.0"
-  }
 }
