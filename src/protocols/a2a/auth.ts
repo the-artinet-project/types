@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { z } from "zod/v4";
+import { z } from 'zod/v4';
 
 /**
  * @description Type of a security scheme.
  */
 export const SecuritySchemeTypeSchema = z
-  .enum(["apiKey", "http", "mutualTLS", "oauth2", "openIdConnect"])
-  .describe("Type of a security scheme.");
+    .enum(['apiKey', 'http', 'mutualTLS', 'oauth2', 'openIdConnect'])
+    .describe('Type of a security scheme.');
 export const SecuritySchemeType = SecuritySchemeTypeSchema.enum;
 export type SecuritySchemeType = z.output<typeof SecuritySchemeTypeSchema>;
 
@@ -18,21 +18,18 @@ export type SecuritySchemeType = z.output<typeof SecuritySchemeTypeSchema>;
  * @description Base properties shared by all security schemes.
  */
 export const SecuritySchemeBaseSchema = z
-  .object({
-    /**
-     * @required Type of the security scheme.
-     */
-    type: SecuritySchemeTypeSchema.describe("Type of the security scheme."),
+    .object({
+        /**
+         * @required Type of the security scheme.
+         */
+        type: SecuritySchemeTypeSchema.describe('Type of the security scheme.'),
 
-    /**
-     * @optional Description of this security scheme.
-     */
-    description: z
-      .string()
-      .optional()
-      .describe("Description of this security scheme."),
-  })
-  .describe("Base properties shared by all security schemes.");
+        /**
+         * @optional Description of this security scheme.
+         */
+        description: z.string().optional().describe('Description of this security scheme.'),
+    })
+    .describe('Base properties shared by all security schemes.');
 
 export type SecuritySchemeBase = z.output<typeof SecuritySchemeBaseSchema>;
 
@@ -40,29 +37,23 @@ export type SecuritySchemeBase = z.output<typeof SecuritySchemeBaseSchema>;
  * @description Defines a security scheme using an API key.
  */
 export const APIKeySecuritySchemeSchema = SecuritySchemeBaseSchema.extend({
-  /**
-   * @required API Key Type of the security scheme.
-   */
-  type: z
-    .literal(SecuritySchemeTypeSchema.enum.apiKey)
-    .describe("API Key Type of the security scheme."),
+    /**
+     * @required API Key Type of the security scheme.
+     */
+    type: z.literal(SecuritySchemeTypeSchema.enum.apiKey).describe('API Key Type of the security scheme.'),
 
-  /**
-   * @required The location of the API key. Valid values are "query", "header", or "cookie".
-   */
-  in: z
-    .enum(["query", "header", "cookie"])
-    .describe(
-      "The location of the API key. Valid values are 'query', 'header', or 'cookie'."
-    ),
+    /**
+     * @required The location of the API key. Valid values are "query", "header", or "cookie".
+     */
+    in: z
+        .enum(['query', 'header', 'cookie'])
+        .describe("The location of the API key. Valid values are 'query', 'header', or 'cookie'."),
 
-  /**
-   * @required The name of the header, query or cookie parameter to be used.
-   */
-  name: z
-    .string()
-    .describe("The name of the header, query or cookie parameter to be used."),
-}).describe("Defines a security scheme using an API key.");
+    /**
+     * @required The name of the header, query or cookie parameter to be used.
+     */
+    name: z.string().describe('The name of the header, query or cookie parameter to be used.'),
+}).describe('Defines a security scheme using an API key.');
 
 export type APIKeySecurityScheme = z.output<typeof APIKeySecuritySchemeSchema>;
 
@@ -70,183 +61,165 @@ export type APIKeySecurityScheme = z.output<typeof APIKeySecuritySchemeSchema>;
  * @description HTTP Authentication security scheme.
  */
 export const HTTPAuthSecuritySchemeSchema = SecuritySchemeBaseSchema.extend({
-  /**
-   * @required HTTP Type of the security scheme.
-   */
-  type: z
-    .literal(SecuritySchemeTypeSchema.enum.http)
-    .describe("HTTP Type of the security scheme."),
+    /**
+     * @required HTTP Type of the security scheme.
+     */
+    type: z.literal(SecuritySchemeTypeSchema.enum.http).describe('HTTP Type of the security scheme.'),
 
-  /**
-   * @required The name of the HTTP Authentication scheme to be used in the Authorization header as defined
-   * in RFC7235. The values used SHOULD be registered in the IANA Authentication Scheme registry.
-   * The value is case-insensitive, as defined in RFC7235.
-   */
-  scheme: z
-    .string()
-    .describe(
-      "The name of the HTTP Authentication scheme to be used in the Authorization header as defined in RFC7235. The values used SHOULD be registered in the IANA Authentication Scheme registry. The value is case-insensitive, as defined in RFC7235."
-    ),
+    /**
+     * @required The name of the HTTP Authentication scheme to be used in the Authorization header as defined
+     * in RFC7235. The values used SHOULD be registered in the IANA Authentication Scheme registry.
+     * The value is case-insensitive, as defined in RFC7235.
+     */
+    scheme: z
+        .string()
+        .describe(
+            'The name of the HTTP Authentication scheme to be used in the Authorization header as defined in RFC7235. The values used SHOULD be registered in the IANA Authentication Scheme registry. The value is case-insensitive, as defined in RFC7235.',
+        ),
 
-  /**
-   * @optional A hint to the client to identify how the bearer token is formatted. Bearer tokens are usually
-   * generated by an authorization server, so this information is primarily for documentation
-   * purposes.
-   */
-  bearerFormat: z
-    .string()
-    .optional()
-    .describe(
-      "A hint to the client to identify how the bearer token is formatted. Bearer tokens are usually generated by an authorization server, so this information is primarily for documentation purposes."
-    ),
+    /**
+     * @optional A hint to the client to identify how the bearer token is formatted. Bearer tokens are usually
+     * generated by an authorization server, so this information is primarily for documentation
+     * purposes.
+     */
+    bearerFormat: z
+        .string()
+        .optional()
+        .describe(
+            'A hint to the client to identify how the bearer token is formatted. Bearer tokens are usually generated by an authorization server, so this information is primarily for documentation purposes.',
+        ),
 });
 
-export type HTTPAuthSecurityScheme = z.output<
-  typeof HTTPAuthSecuritySchemeSchema
->;
+export type HTTPAuthSecurityScheme = z.output<typeof HTTPAuthSecuritySchemeSchema>;
 
 /**
  * @description Configuration details for a supported Authorization Code OAuth Flow
  */
 export const AuthorizationCodeOAuthFlowSchema = z
-  .object({
-    /**
-     * @required The authorization URL to be used for this flow. This MUST be in the form of a URL. The OAuth2
-     * standard requires the use of TLS
-     */
-    authorizationUrl: z
-      .string()
-      .url()
-      .describe(
-        "The authorization URL to be used for this flow. This MUST be in the form of a URL. The OAuth2 standard requires the use of TLS"
-      ),
+    .object({
+        /**
+         * @required The authorization URL to be used for this flow. This MUST be in the form of a URL. The OAuth2
+         * standard requires the use of TLS
+         */
+        authorizationUrl: z
+            .string()
+            .url()
+            .describe(
+                'The authorization URL to be used for this flow. This MUST be in the form of a URL. The OAuth2 standard requires the use of TLS',
+            ),
 
-    /**
-     * @required The token URL to be used for this flow. This MUST be in the form of a URL. The OAuth2 standard
-     * requires the use of TLS.
-     */
-    tokenUrl: z
-      .string()
-      .url()
-      .describe(
-        "The token URL to be used for this flow. This MUST be in the form of a URL. The OAuth2 standard requires the use of TLS."
-      ),
+        /**
+         * @required The token URL to be used for this flow. This MUST be in the form of a URL. The OAuth2 standard
+         * requires the use of TLS.
+         */
+        tokenUrl: z
+            .url()
+            .describe(
+                'The token URL to be used for this flow. This MUST be in the form of a URL. The OAuth2 standard requires the use of TLS.',
+            ),
 
-    /**
-     * @optional The URL to be used for obtaining refresh tokens. This MUST be in the form of a URL. The OAuth2
-     * standard requires the use of TLS.
-     */
-    refreshUrl: z
-      .string()
-      .url()
-      .optional()
-      .describe(
-        "The URL to be used for obtaining refresh tokens. This MUST be in the form of a URL. The OAuth2 standard requires the use of TLS."
-      ),
+        /**
+         * @optional The URL to be used for obtaining refresh tokens. This MUST be in the form of a URL. The OAuth2
+         * standard requires the use of TLS.
+         */
+        refreshUrl: z
+            .url()
+            .optional()
+            .describe(
+                'The URL to be used for obtaining refresh tokens. This MUST be in the form of a URL. The OAuth2 standard requires the use of TLS.',
+            ),
 
-    /**
-     * @required The available scopes for the OAuth2 security scheme. A map between the scope name and a short
-     * description for it. The map MAY be empty.
-     */
-    scopes: z
-      .record(z.string(), z.string())
-      .describe(
-        "The available scopes for the OAuth2 security scheme. A map between the scope name and a short description for it. The map MAY be empty."
-      ),
-  })
-  .describe(
-    "Configuration details for a supported Authorization Code OAuth Flow"
-  );
+        /**
+         * @required The available scopes for the OAuth2 security scheme. A map between the scope name and a short
+         * description for it. The map MAY be empty.
+         */
+        scopes: z
+            .record(z.string(), z.string())
+            .describe(
+                'The available scopes for the OAuth2 security scheme. A map between the scope name and a short description for it. The map MAY be empty.',
+            ),
+    })
+    .describe('Configuration details for a supported Authorization Code OAuth Flow');
 
-export type AuthorizationCodeOAuthFlow = z.output<
-  typeof AuthorizationCodeOAuthFlowSchema
->;
+export type AuthorizationCodeOAuthFlow = z.output<typeof AuthorizationCodeOAuthFlowSchema>;
 
 /**
  * @description Configuration details for a supported Client Credentials OAuth Flow
  */
 export const ClientCredentialsOAuthFlowSchema = z
-  .object({
-    /**
-     * @required The token URL to be used for this flow. This MUST be in the form of a URL. The OAuth2 standard
-     * requires the use of TLS.
-     */
-    tokenUrl: z
-      .string()
-      .url()
-      .describe(
-        "The token URL to be used for this flow. This MUST be in the form of a URL. The OAuth2 standard requires the use of TLS."
-      ),
+    .object({
+        /**
+         * @required The token URL to be used for this flow. This MUST be in the form of a URL. The OAuth2 standard
+         * requires the use of TLS.
+         */
+        tokenUrl: z
+            .url()
+            .describe(
+                'The token URL to be used for this flow. This MUST be in the form of a URL. The OAuth2 standard requires the use of TLS.',
+            ),
 
-    /**
-     * @optional The URL to be used for obtaining refresh tokens. This MUST be in the form of a URL. The OAuth2
-     * standard requires the use of TLS.
-     */
-    refreshUrl: z
-      .string()
-      .url()
-      .optional()
-      .describe(
-        "The URL to be used for obtaining refresh tokens. This MUST be in the form of a URL. The OAuth2 standard requires the use of TLS."
-      ),
+        /**
+         * @optional The URL to be used for obtaining refresh tokens. This MUST be in the form of a URL. The OAuth2
+         * standard requires the use of TLS.
+         */
+        refreshUrl: z
+            .url()
+            .optional()
+            .describe(
+                'The URL to be used for obtaining refresh tokens. This MUST be in the form of a URL. The OAuth2 standard requires the use of TLS.',
+            ),
 
-    /**
-     * @required The available scopes for the OAuth2 security scheme. A map between the scope name and a short
-     * description for it. The map MAY be empty.
-     */
-    scopes: z
-      .record(z.string(), z.string())
-      .describe(
-        "The available scopes for the OAuth2 security scheme. A map between the scope name and a short description for it. The map MAY be empty."
-      ),
-  })
-  .describe(
-    "Configuration details for a supported Client Credentials OAuth Flow"
-  );
+        /**
+         * @required The available scopes for the OAuth2 security scheme. A map between the scope name and a short
+         * description for it. The map MAY be empty.
+         */
+        scopes: z
+            .record(z.string(), z.string())
+            .describe(
+                'The available scopes for the OAuth2 security scheme. A map between the scope name and a short description for it. The map MAY be empty.',
+            ),
+    })
+    .describe('Configuration details for a supported Client Credentials OAuth Flow');
 
-export type ClientCredentialsOAuthFlow = z.output<
-  typeof ClientCredentialsOAuthFlowSchema
->;
+export type ClientCredentialsOAuthFlow = z.output<typeof ClientCredentialsOAuthFlowSchema>;
 
 /**
  * @description Configuration details for a supported Implicit OAuth Flow
  */
 export const ImplicitOAuthFlowSchema = z
-  .object({
-    /**
-     * @required The authorization URL to be used for this flow. This MUST be in the form of a URL. The OAuth2
-     * standard requires the use of TLS
-     */
-    authorizationUrl: z
-      .string()
-      .url()
-      .describe(
-        "The authorization URL to be used for this flow. This MUST be in the form of a URL. The OAuth2 standard requires the use of TLS"
-      ),
+    .object({
+        /**
+         * @required The authorization URL to be used for this flow. This MUST be in the form of a URL. The OAuth2
+         * standard requires the use of TLS
+         */
+        authorizationUrl: z
+            .url()
+            .describe(
+                'The authorization URL to be used for this flow. This MUST be in the form of a URL. The OAuth2 standard requires the use of TLS',
+            ),
 
-    /**
-     * @optional The URL to be used for obtaining refresh tokens. This MUST be in the form of a URL. The OAuth2
-     * standard requires the use of TLS.
-     */
-    refreshUrl: z
-      .string()
-      .url()
-      .optional()
-      .describe(
-        "The URL to be used for obtaining refresh tokens. This MUST be in the form of a URL. The OAuth2 standard requires the use of TLS."
-      ),
+        /**
+         * @optional The URL to be used for obtaining refresh tokens. This MUST be in the form of a URL. The OAuth2
+         * standard requires the use of TLS.
+         */
+        refreshUrl: z
+            .url()
+            .optional()
+            .describe(
+                'The URL to be used for obtaining refresh tokens. This MUST be in the form of a URL. The OAuth2 standard requires the use of TLS.',
+            ),
 
-    /**
-     * @required The available scopes for the OAuth2 security scheme. A map between the scope name and a short
-     * description for it. The map MAY be empty.
-     */
-    scopes: z
-      .record(z.string(), z.string())
-      .describe(
-        "The available scopes for the OAuth2 security scheme. A map between the scope name and a short description for it. The map MAY be empty."
-      ),
-  })
-  .describe("Configuration details for a supported Implicit OAuth Flow");
+        /**
+         * @required The available scopes for the OAuth2 security scheme. A map between the scope name and a short
+         * description for it. The map MAY be empty.
+         */
+        scopes: z
+            .record(z.string(), z.string())
+            .describe(
+                'The available scopes for the OAuth2 security scheme. A map between the scope name and a short description for it. The map MAY be empty.',
+            ),
+    })
+    .describe('Configuration details for a supported Implicit OAuth Flow');
 
 export type ImplicitOAuthFlow = z.output<typeof ImplicitOAuthFlowSchema>;
 
@@ -254,41 +227,39 @@ export type ImplicitOAuthFlow = z.output<typeof ImplicitOAuthFlowSchema>;
  * @description Configuration details for a supported Password OAuth Flow
  */
 export const PasswordOAuthFlowSchema = z
-  .object({
-    /**
-     * @required The token URL to be used for this flow. This MUST be in the form of a URL. The OAuth2 standard
-     * requires the use of TLS.
-     */
-    tokenUrl: z
-      .string()
-      .url()
-      .describe(
-        "The token URL to be used for this flow. This MUST be in the form of a URL. The OAuth2 standard requires the use of TLS."
-      ),
+    .object({
+        /**
+         * @required The token URL to be used for this flow. This MUST be in the form of a URL. The OAuth2 standard
+         * requires the use of TLS.
+         */
+        tokenUrl: z
+            .url()
+            .describe(
+                'The token URL to be used for this flow. This MUST be in the form of a URL. The OAuth2 standard requires the use of TLS.',
+            ),
 
-    /**
-     * @optional The URL to be used for obtaining refresh tokens. This MUST be in the form of a URL. The OAuth2
-     * standard requires the use of TLS.
-     */
-    refreshUrl: z
-      .string()
-      .url()
-      .optional()
-      .describe(
-        "The URL to be used for obtaining refresh tokens. This MUST be in the form of a URL. The OAuth2 standard requires the use of TLS."
-      ),
+        /**
+         * @optional The URL to be used for obtaining refresh tokens. This MUST be in the form of a URL. The OAuth2
+         * standard requires the use of TLS.
+         */
+        refreshUrl: z
+            .url()
+            .optional()
+            .describe(
+                'The URL to be used for obtaining refresh tokens. This MUST be in the form of a URL. The OAuth2 standard requires the use of TLS.',
+            ),
 
-    /**
-     * @required The available scopes for the OAuth2 security scheme. A map between the scope name and a short
-     * description for it. The map MAY be empty.
-     */
-    scopes: z
-      .record(z.string(), z.string())
-      .describe(
-        "The available scopes for the OAuth2 security scheme. A map between the scope name and a short description for it. The map MAY be empty."
-      ),
-  })
-  .describe("Configuration details for a supported Password OAuth Flow");
+        /**
+         * @required The available scopes for the OAuth2 security scheme. A map between the scope name and a short
+         * description for it. The map MAY be empty.
+         */
+        scopes: z
+            .record(z.string(), z.string())
+            .describe(
+                'The available scopes for the OAuth2 security scheme. A map between the scope name and a short description for it. The map MAY be empty.',
+            ),
+    })
+    .describe('Configuration details for a supported Password OAuth Flow');
 
 export type PasswordOAuthFlow = z.output<typeof PasswordOAuthFlowSchema>;
 
@@ -296,36 +267,34 @@ export type PasswordOAuthFlow = z.output<typeof PasswordOAuthFlowSchema>;
  * @description The configuration of supported OAuth Flows
  */
 export const OAuthFlowsSchema = z
-  .object({
-    /**
-     * @optional Configuration for the OAuth Authorization Code flow. Previously called accessCode in OpenAPI 2.0.
-     */
-    authorizationCode: AuthorizationCodeOAuthFlowSchema.optional().describe(
-      "Configuration for the OAuth Authorization Code flow"
-    ),
+    .object({
+        /**
+         * @optional Configuration for the OAuth Authorization Code flow. Previously called accessCode in OpenAPI 2.0.
+         */
+        authorizationCode: AuthorizationCodeOAuthFlowSchema.optional().describe(
+            'Configuration for the OAuth Authorization Code flow',
+        ),
 
-    /**
-     * @optional Configuration for the OAuth Client Credentials flow. Previously called application in OpenAPI 2.0
-     */
-    clientCredentials: ClientCredentialsOAuthFlowSchema.optional().describe(
-      "Configuration for the OAuth Client Credentials flow"
-    ),
+        /**
+         * @optional Configuration for the OAuth Client Credentials flow. Previously called application in OpenAPI 2.0
+         */
+        clientCredentials: ClientCredentialsOAuthFlowSchema.optional().describe(
+            'Configuration for the OAuth Client Credentials flow',
+        ),
 
-    /**
-     * @optional Configuration for the OAuth Implicit flow
-     */
-    implicit: ImplicitOAuthFlowSchema.optional().describe(
-      "Configuration for the OAuth Implicit flow"
-    ),
+        /**
+         * @optional Configuration for the OAuth Implicit flow
+         */
+        implicit: ImplicitOAuthFlowSchema.optional().describe('Configuration for the OAuth Implicit flow'),
 
-    /**
-     * @optional Configuration for the OAuth Resource Owner Password flow
-     */
-    password: PasswordOAuthFlowSchema.optional().describe(
-      "Configuration for the OAuth Resource Owner Password flow"
-    ),
-  })
-  .describe("The configuration of supported OAuth Flows");
+        /**
+         * @optional Configuration for the OAuth Resource Owner Password flow
+         */
+        password: PasswordOAuthFlowSchema.optional().describe(
+            'Configuration for the OAuth Resource Owner Password flow',
+        ),
+    })
+    .describe('The configuration of supported OAuth Flows');
 
 export type OAuthFlows = z.output<typeof OAuthFlowsSchema>;
 
@@ -333,37 +302,28 @@ export type OAuthFlows = z.output<typeof OAuthFlowsSchema>;
  * @description OAuth2 security scheme configuration.
  */
 export const OAuth2SecuritySchemeSchema = SecuritySchemeBaseSchema.extend({
-  /**
-   * @required OAuth2 Type of the security scheme.
-   */
-  type: z
-    .literal(SecuritySchemeTypeSchema.enum.oauth2)
-    .describe("OAuth2 Type of the security scheme."),
+    /**
+     * @required OAuth2 Type of the security scheme.
+     */
+    type: z.literal(SecuritySchemeTypeSchema.enum.oauth2).describe('OAuth2 Type of the security scheme.'),
 
-  /**
-   * @required An object containing configuration information for the flow types supported.
-   */
-  flows: OAuthFlowsSchema.describe(
-    "An object containing configuration information for the flow types supported."
-  ),
+    /**
+     * @required An object containing configuration information for the flow types supported.
+     */
+    flows: OAuthFlowsSchema.describe('An object containing configuration information for the flow types supported.'),
 
-  /**
-   * @optional URL to the oauth2 authorization server metadata
-   * [RFC8414](https://datatracker.ietf.org/doc/html/rfc8414). TLS is required.
-   */
-  oauth2MetadataUrl: z
-    .string()
-    .url()
-    .optional()
-    .describe("URL to the oauth2 authorization server metadata"),
-}).describe("OAuth2 security scheme configuration.");
+    /**
+     * @optional URL to the oauth2 authorization server metadata
+     * [RFC8414](https://datatracker.ietf.org/doc/html/rfc8414). TLS is required.
+     */
+    oauth2MetadataUrl: z.url().optional().describe('URL to the oauth2 authorization server metadata'),
+}).describe('OAuth2 security scheme configuration.');
 export type OAuth2SecurityScheme = z.output<typeof OAuth2SecuritySchemeSchema>;
 
 /**
  * @description OpenID Connect security scheme.
  */
-export const OpenIdConnectSecuritySchemeSchema =
-  SecuritySchemeBaseSchema.extend({
+export const OpenIdConnectSecuritySchemeSchema = SecuritySchemeBaseSchema.extend({
     /**
      * @required Type of the security scheme.
      */
@@ -372,33 +332,31 @@ export const OpenIdConnectSecuritySchemeSchema =
     /**
      * @required Well-known URL to discover the [[OpenID-Connect-Discovery]] provider metadata.
      */
-    openIdConnectUrl: z.string().url(),
-  });
+    openIdConnectUrl: z
+        .url()
+        .describe('Well-known URL to discover the [[OpenID-Connect-Discovery]] provider metadata.'),
+});
 
-export type OpenIdConnectSecurityScheme = z.output<
-  typeof OpenIdConnectSecuritySchemeSchema
->;
+export type OpenIdConnectSecurityScheme = z.output<typeof OpenIdConnectSecuritySchemeSchema>;
 
 /**
  * @description Mutual TLS (mTLS) security scheme.
  */
 export const MutualTLSSecuritySchemeSchema = SecuritySchemeBaseSchema.extend({
-  /**
-   * @required Type of the security scheme.
-   */
-  type: z.literal(SecuritySchemeTypeSchema.enum.mutualTLS),
+    /**
+     * @required Type of the security scheme.
+     */
+    type: z.literal(SecuritySchemeTypeSchema.enum.mutualTLS),
 });
 
-export type MutualTLSSecurityScheme = z.output<
-  typeof MutualTLSSecuritySchemeSchema
->;
+export type MutualTLSSecurityScheme = z.output<typeof MutualTLSSecuritySchemeSchema>;
 
 export const SecuritySchemeSchema = z.union([
-  APIKeySecuritySchemeSchema,
-  HTTPAuthSecuritySchemeSchema,
-  OAuth2SecuritySchemeSchema,
-  OpenIdConnectSecuritySchemeSchema,
-  MutualTLSSecuritySchemeSchema,
+    APIKeySecuritySchemeSchema,
+    HTTPAuthSecuritySchemeSchema,
+    OAuth2SecuritySchemeSchema,
+    OpenIdConnectSecuritySchemeSchema,
+    MutualTLSSecuritySchemeSchema,
 ]);
 
 export type SecurityScheme = z.output<typeof SecuritySchemeSchema>;

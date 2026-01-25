@@ -3,348 +3,259 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { z } from "zod/v4";
+import { z } from 'zod/v4';
 import {
-  JSONRPCErrorResponseSchema,
-  JSONRPCRequestSchema,
-  JSONRPCResultResponseSchema,
-} from "@modelcontextprotocol/sdk/types.js";
-import { TaskIdParamsSchema } from "./task.js";
+    JSONRPCErrorResponseSchema,
+    JSONRPCRequestSchema,
+    JSONRPCResultResponseSchema,
+} from '@modelcontextprotocol/sdk/types.js';
+import { TaskIdParamsSchema } from './task.js';
 
 /**
  * Defines parameters for fetching a specific push notification configuration for a task.
  */
-export const GetTaskPushNotificationConfigParamSchema =
-  TaskIdParamsSchema.extend({
+export const GetTaskPushNotificationConfigParamSchema = TaskIdParamsSchema.extend({
     /**
      * @optional The ID of the push notification configuration to retrieve.
      */
     pushNotificationConfigId: z.string().optional(),
-  });
+});
 
-export type GetTaskPushNotificationConfigParam = z.output<
-  typeof GetTaskPushNotificationConfigParamSchema
->;
+export type GetTaskPushNotificationConfigParam = z.output<typeof GetTaskPushNotificationConfigParamSchema>;
 
 export const GetTaskPushNotificationConfigParamsSchema = z.union([
-  GetTaskPushNotificationConfigParamSchema,
-  TaskIdParamsSchema,
+    GetTaskPushNotificationConfigParamSchema,
+    TaskIdParamsSchema,
 ]);
-export type GetTaskPushNotificationConfigParams = z.output<
-  typeof GetTaskPushNotificationConfigParamsSchema
->;
+export type GetTaskPushNotificationConfigParams = z.output<typeof GetTaskPushNotificationConfigParamsSchema>;
 
 /**
  * Defines parameters for listing all push notification configurations for a task.
  */
-export const ListTaskPushNotificationConfigParamsSchema =
-  TaskIdParamsSchema.extend({});
+export const ListTaskPushNotificationConfigParamsSchema = TaskIdParamsSchema.extend({});
 
-export type ListTaskPushNotificationConfigParams = z.output<
-  typeof ListTaskPushNotificationConfigParamsSchema
->;
+export type ListTaskPushNotificationConfigParams = z.output<typeof ListTaskPushNotificationConfigParamsSchema>;
 
 /**
  * Defines parameters for deleting a specific push notification configuration for a task.
  */
-export const DeleteTaskPushNotificationConfigParamsSchema =
-  TaskIdParamsSchema.extend({
+export const DeleteTaskPushNotificationConfigParamsSchema = TaskIdParamsSchema.extend({
     /**
      * @required The ID of the push notification configuration to delete.
      */
     pushNotificationConfigId: z.string(),
-  });
+});
 
-export type DeleteTaskPushNotificationConfigParams = z.output<
-  typeof DeleteTaskPushNotificationConfigParamsSchema
->;
+export type DeleteTaskPushNotificationConfigParams = z.output<typeof DeleteTaskPushNotificationConfigParamsSchema>;
 
 /**
  * @description Defines authentication details for a push notification endpoint.
  */
 export const PushNotificationAuthenticationInfoSchema = z
-  .object({
-    /**
-     * @required A list of supported authentication schemes (e.g., 'Basic', 'Bearer').
-     */
-    schemes: z
-      .array(z.string())
-      .describe("The authentication schemes supported by the endpoint."),
-    /**
-     * @optional Optional credentials required by the push notification endpoint.
-     */
-    credentials: z.string().optional(),
-  })
-  .describe("Defines authentication details for a push notification endpoint.");
+    .object({
+        /**
+         * @required A list of supported authentication schemes (e.g., 'Basic', 'Bearer').
+         */
+        schemes: z.array(z.string()).describe('The authentication schemes supported by the endpoint.'),
+        /**
+         * @optional Optional credentials required by the push notification endpoint.
+         */
+        credentials: z.string().optional(),
+    })
+    .describe('Defines authentication details for a push notification endpoint.');
 
-export type PushNotificationAuthenticationInfo = z.output<
-  typeof PushNotificationAuthenticationInfoSchema
->;
+export type PushNotificationAuthenticationInfo = z.output<typeof PushNotificationAuthenticationInfoSchema>;
 
 /**
  * @description Defines the configuration for setting up push notifications for task updates.
  */
 export const PushNotificationConfigSchema = z
-  .object({
-    /**
-     * @optional A unique ID for the push notification configuration, created by the server
-     * to support multiple notification callbacks.
-     */
-    id: z
-      .string()
-      .optional()
-      .describe(
-        "A unique ID for the push notification configuration, created by the server to support multiple notification callbacks."
-      ),
-    /**
-     * @required The callback URL where the agent should send push notifications.
-     */
-    url: z
-      .string()
-      .url()
-      .describe(
-        "The callback URL where the agent should send push notifications."
-      ),
-    /**
-     * @optional A unique token for this task or session to validate incoming push notifications.
-     */
-    token: z
-      .string()
-      .optional()
-      .describe(
-        "A unique token for this task or session to validate incoming push notifications."
-      ),
-    /**
-     * @optional Authentication details for the agent to use when calling the notification URL.
-     */
-    authentication:
-      PushNotificationAuthenticationInfoSchema.optional().describe(
-        "Authentication details for the agent to use when calling the notification URL."
-      ),
-  })
-  .describe(
-    "Defines the configuration for setting up push notifications for task updates."
-  );
-export type PushNotificationConfig = z.output<
-  typeof PushNotificationConfigSchema
->;
+    .object({
+        /**
+         * @optional A unique ID for the push notification configuration, created by the server
+         * to support multiple notification callbacks.
+         */
+        id: z
+            .string()
+            .optional()
+            .describe(
+                'A unique ID for the push notification configuration, created by the server to support multiple notification callbacks.',
+            ),
+        /**
+         * @required The callback URL where the agent should send push notifications.
+         */
+        url: z.url().describe('The callback URL where the agent should send push notifications.'),
+        /**
+         * @optional A unique token for this task or session to validate incoming push notifications.
+         */
+        token: z
+            .string()
+            .optional()
+            .describe('A unique token for this task or session to validate incoming push notifications.'),
+        /**
+         * @optional Authentication details for the agent to use when calling the notification URL.
+         */
+        authentication: PushNotificationAuthenticationInfoSchema.optional().describe(
+            'Authentication details for the agent to use when calling the notification URL.',
+        ),
+    })
+    .describe('Defines the configuration for setting up push notifications for task updates.');
+export type PushNotificationConfig = z.output<typeof PushNotificationConfigSchema>;
 
 /**
  * @description A container associating a push notification configuration with a specific task.
  */
 export const TaskPushNotificationConfigSchema = z
-  .object({
-    /**
-     * @required The ID of the task to associate with the push notification configuration.
-     */
-    taskId: z
-      .string()
-      .describe(
-        "The ID of the task to associate with the push notification configuration."
-      ),
-    /**
-     * @required The push notification configuration to associate with the task.
-     */
-    pushNotificationConfig: PushNotificationConfigSchema.describe(
-      "The push notification configuration to associate with the task."
-    ),
-  })
-  .describe(
-    "A container associating a push notification configuration with a specific task."
-  );
-export type TaskPushNotificationConfig = z.output<
-  typeof TaskPushNotificationConfigSchema
->;
+    .object({
+        /**
+         * @required The ID of the task to associate with the push notification configuration.
+         */
+        taskId: z.string().describe('The ID of the task to associate with the push notification configuration.'),
+        /**
+         * @required The push notification configuration to associate with the task.
+         */
+        pushNotificationConfig: PushNotificationConfigSchema.describe(
+            'The push notification configuration to associate with the task.',
+        ),
+    })
+    .describe('A container associating a push notification configuration with a specific task.');
+export type TaskPushNotificationConfig = z.output<typeof TaskPushNotificationConfigSchema>;
 
 /**
  * @description Request to set or update the push notification config for a task.
  */
-export const SetTaskPushNotificationConfigRequestSchema =
-  JSONRPCRequestSchema.extend({
-    method: z.literal("tasks/pushNotificationConfig/set"),
+export const SetTaskPushNotificationConfigRequestSchema = JSONRPCRequestSchema.extend({
+    method: z.literal('tasks/pushNotificationConfig/set'),
     params: TaskPushNotificationConfigSchema.describe(
-      "Defines the parameters for a request to set or update the push notification config for a task."
+        'Defines the parameters for a request to set or update the push notification config for a task.',
     ),
-  }).describe(
-    "Represents a JSON-RPC request for the `tasks/pushNotificationConfig/set` method."
-  );
-export type SetTaskPushNotificationConfigRequest = z.output<
-  typeof SetTaskPushNotificationConfigRequestSchema
->;
+}).describe('Represents a JSON-RPC request for the `tasks/pushNotificationConfig/set` method.');
+export type SetTaskPushNotificationConfigRequest = z.output<typeof SetTaskPushNotificationConfigRequestSchema>;
 
 /**
  * @description JSON-RPC success response model for the 'tasks/pushNotificationConfig/set' method.
  */
-export const SetTaskPushNotificationConfigSuccessResponseSchema =
-  JSONRPCResultResponseSchema.extend({
+export const SetTaskPushNotificationConfigSuccessResponseSchema = JSONRPCResultResponseSchema.extend({
     /**
      * @required The result of the request, which can be a direct reply Message or the initial Task object.
      */
     result: TaskPushNotificationConfigSchema.describe(
-      "The result of the request, which can be a direct reply Message or the initial Task object."
+        'The result of the request, which can be a direct reply Message or the initial Task object.',
     ),
-  }).describe(
-    "JSON-RPC success response model for the 'tasks/pushNotificationConfig/set' method."
-  );
+}).describe("JSON-RPC success response model for the 'tasks/pushNotificationConfig/set' method.");
 export type SetTaskPushNotificationConfigSuccessResponse = z.output<
-  typeof SetTaskPushNotificationConfigSuccessResponseSchema
+    typeof SetTaskPushNotificationConfigSuccessResponseSchema
 >;
 
 /**
  * @description Response to a `tasks/pushNotificationConfig/set` request.
  */
 export const SetTaskPushNotificationConfigResponseSchema = z
-  .union([
-    SetTaskPushNotificationConfigSuccessResponseSchema,
-    JSONRPCErrorResponseSchema,
-  ])
-  .describe("Response to a `tasks/pushNotificationConfig/set` request.");
-export type SetTaskPushNotificationConfigResponse = z.output<
-  typeof SetTaskPushNotificationConfigResponseSchema
->;
+    .union([SetTaskPushNotificationConfigSuccessResponseSchema, JSONRPCErrorResponseSchema])
+    .describe('Response to a `tasks/pushNotificationConfig/set` request.');
+export type SetTaskPushNotificationConfigResponse = z.output<typeof SetTaskPushNotificationConfigResponseSchema>;
 
 /**
  * @description Request to retrieve the currently configured push notification configuration for a task.
  */
-export const GetTaskPushNotificationConfigRequestSchema =
-  JSONRPCRequestSchema.extend({
-    method: z.literal("tasks/pushNotificationConfig/get"),
+export const GetTaskPushNotificationConfigRequestSchema = JSONRPCRequestSchema.extend({
+    method: z.literal('tasks/pushNotificationConfig/get'),
     params: GetTaskPushNotificationConfigParamsSchema.describe(
-      "Defines the parameters for a request to retrieve the currently configured push notification configuration for a task."
+        'Defines the parameters for a request to retrieve the currently configured push notification configuration for a task.',
     ),
-  }).describe(
-    "Represents a JSON-RPC request for the `tasks/pushNotificationConfig/get` method."
-  );
-export type GetTaskPushNotificationConfigRequest = z.output<
-  typeof GetTaskPushNotificationConfigRequestSchema
->;
+}).describe('Represents a JSON-RPC request for the `tasks/pushNotificationConfig/get` method.');
+export type GetTaskPushNotificationConfigRequest = z.output<typeof GetTaskPushNotificationConfigRequestSchema>;
 
 /**
  * @description JSON-RPC success response model for the 'tasks/pushNotificationConfig/get' method.
  */
-export const GetTaskPushNotificationConfigSuccessResponseSchema =
-  JSONRPCResultResponseSchema.extend({
+export const GetTaskPushNotificationConfigSuccessResponseSchema = JSONRPCResultResponseSchema.extend({
     /**
      * @required The result, containing the requested push notification configuration.
      */
     result: TaskPushNotificationConfigSchema.describe(
-      "The result, containing the requested push notification configuration."
+        'The result, containing the requested push notification configuration.',
     ),
-  }).describe(
-    "JSON-RPC success response model for the 'tasks/pushNotificationConfig/get' method."
-  );
+}).describe("JSON-RPC success response model for the 'tasks/pushNotificationConfig/get' method.");
 export type GetTaskPushNotificationConfigSuccessResponse = z.output<
-  typeof GetTaskPushNotificationConfigSuccessResponseSchema
+    typeof GetTaskPushNotificationConfigSuccessResponseSchema
 >;
 
 /**
  * @description Response to a `tasks/pushNotificationConfig/get` request.
  */
 export const GetTaskPushNotificationConfigResponseSchema = z
-  .union([
-    GetTaskPushNotificationConfigSuccessResponseSchema,
-    JSONRPCErrorResponseSchema,
-  ])
-  .describe("Response to a `tasks/pushNotificationConfig/get` request.");
-export type GetTaskPushNotificationConfigResponse = z.output<
-  typeof GetTaskPushNotificationConfigResponseSchema
->;
+    .union([GetTaskPushNotificationConfigSuccessResponseSchema, JSONRPCErrorResponseSchema])
+    .describe('Response to a `tasks/pushNotificationConfig/get` request.');
+export type GetTaskPushNotificationConfigResponse = z.output<typeof GetTaskPushNotificationConfigResponseSchema>;
 
 /**
  * @description Request to list all push notification configurations for a task.
  */
-export const ListTaskPushNotificationConfigRequestSchema =
-  JSONRPCRequestSchema.extend({
-    method: z.literal("tasks/pushNotificationConfig/list"),
+export const ListTaskPushNotificationConfigRequestSchema = JSONRPCRequestSchema.extend({
+    method: z.literal('tasks/pushNotificationConfig/list'),
     params: ListTaskPushNotificationConfigParamsSchema.describe(
-      "Defines the parameters for a request to list all push notification configurations for a task."
+        'Defines the parameters for a request to list all push notification configurations for a task.',
     ),
-  }).describe(
-    "Represents a JSON-RPC request for the `tasks/pushNotificationConfig/list` method."
-  );
-export type ListTaskPushNotificationConfigRequest = z.output<
-  typeof ListTaskPushNotificationConfigRequestSchema
->;
+}).describe('Represents a JSON-RPC request for the `tasks/pushNotificationConfig/list` method.');
+export type ListTaskPushNotificationConfigRequest = z.output<typeof ListTaskPushNotificationConfigRequestSchema>;
 
 export const ListTaskPushNotificationConfigResultSchema = z
-  .array(TaskPushNotificationConfigSchema)
-  .describe("The list of push notification configurations.");
-export type ListTaskPushNotificationConfigResult = z.output<
-  typeof ListTaskPushNotificationConfigResultSchema
->;
+    .array(TaskPushNotificationConfigSchema)
+    .describe('The list of push notification configurations.');
+export type ListTaskPushNotificationConfigResult = z.output<typeof ListTaskPushNotificationConfigResultSchema>;
 
 /**
  * @description JSON-RPC success response model for the 'tasks/pushNotificationConfig/list' method.
  */
-export const ListTaskPushNotificationConfigSuccessResponseSchema =
-  JSONRPCResultResponseSchema.extend({
+export const ListTaskPushNotificationConfigSuccessResponseSchema = JSONRPCResultResponseSchema.extend({
     /**
      * @required The result, containing the list of push notification configurations.
      */
     result: ListTaskPushNotificationConfigResultSchema.describe(
-      "The result, containing the list of push notification configurations."
+        'The result, containing the list of push notification configurations.',
     ),
-  }).describe(
-    "JSON-RPC success response model for the 'tasks/pushNotificationConfig/list' method."
-  );
+}).describe("JSON-RPC success response model for the 'tasks/pushNotificationConfig/list' method.");
 export type ListTaskPushNotificationConfigSuccessResponse = z.output<
-  typeof ListTaskPushNotificationConfigSuccessResponseSchema
+    typeof ListTaskPushNotificationConfigSuccessResponseSchema
 >;
 
 /**
  * @description Response to a `tasks/pushNotificationConfig/list` request.
  */
 export const ListTaskPushNotificationConfigResponseSchema = z
-  .union([
-    ListTaskPushNotificationConfigSuccessResponseSchema,
-    JSONRPCErrorResponseSchema,
-  ])
-  .describe("Response to a `tasks/pushNotificationConfig/list` request.");
-export type ListTaskPushNotificationConfigResponse = z.output<
-  typeof ListTaskPushNotificationConfigResponseSchema
->;
+    .union([ListTaskPushNotificationConfigSuccessResponseSchema, JSONRPCErrorResponseSchema])
+    .describe('Response to a `tasks/pushNotificationConfig/list` request.');
+export type ListTaskPushNotificationConfigResponse = z.output<typeof ListTaskPushNotificationConfigResponseSchema>;
 
 /**
  * @description Request to delete a specific push notification configuration for a task.
  */
-export const DeleteTaskPushNotificationConfigRequestSchema =
-  JSONRPCRequestSchema.extend({
-    method: z.literal("tasks/pushNotificationConfig/delete"),
+export const DeleteTaskPushNotificationConfigRequestSchema = JSONRPCRequestSchema.extend({
+    method: z.literal('tasks/pushNotificationConfig/delete'),
     params: DeleteTaskPushNotificationConfigParamsSchema.describe(
-      "Defines the parameters for a request to delete a specific push notification configuration for a task."
+        'Defines the parameters for a request to delete a specific push notification configuration for a task.',
     ),
-  }).describe(
-    "Represents a JSON-RPC request for the `tasks/pushNotificationConfig/delete` method."
-  );
-export type DeleteTaskPushNotificationConfigRequest = z.output<
-  typeof DeleteTaskPushNotificationConfigRequestSchema
->;
+}).describe('Represents a JSON-RPC request for the `tasks/pushNotificationConfig/delete` method.');
+export type DeleteTaskPushNotificationConfigRequest = z.output<typeof DeleteTaskPushNotificationConfigRequestSchema>;
 
 /**
  * @description JSON-RPC success response model for the 'tasks/pushNotificationConfig/delete' method.
  */
-export const DeleteTaskPushNotificationConfigSuccessResponseSchema =
-  JSONRPCResultResponseSchema.extend({
+export const DeleteTaskPushNotificationConfigSuccessResponseSchema = JSONRPCResultResponseSchema.extend({
     /**
      * @required The result is null on successful deletion.
      */
-    result: z.null().describe("The result is null on successful deletion."),
-  }).describe(
-    "JSON-RPC success response model for the 'tasks/pushNotificationConfig/delete' method."
-  );
+    result: z.null().describe('The result is null on successful deletion.'),
+}).describe("JSON-RPC success response model for the 'tasks/pushNotificationConfig/delete' method.");
 export type DeleteTaskPushNotificationConfigSuccessResponse = z.output<
-  typeof DeleteTaskPushNotificationConfigSuccessResponseSchema
+    typeof DeleteTaskPushNotificationConfigSuccessResponseSchema
 >;
 
 /**
  * @description Response to a `tasks/pushNotificationConfig/delete` request.
  */
 export const DeleteTaskPushNotificationConfigResponseSchema = z
-  .union([
-    DeleteTaskPushNotificationConfigSuccessResponseSchema,
-    JSONRPCErrorResponseSchema,
-  ])
-  .describe("Response to a `tasks/pushNotificationConfig/delete` request.");
-export type DeleteTaskPushNotificationConfigResponse = z.output<
-  typeof DeleteTaskPushNotificationConfigResponseSchema
->;
+    .union([DeleteTaskPushNotificationConfigSuccessResponseSchema, JSONRPCErrorResponseSchema])
+    .describe('Response to a `tasks/pushNotificationConfig/delete` request.');
+export type DeleteTaskPushNotificationConfigResponse = z.output<typeof DeleteTaskPushNotificationConfigResponseSchema>;
