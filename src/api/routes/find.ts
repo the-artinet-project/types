@@ -4,7 +4,6 @@
  */
 import { z } from "zod/v4";
 import { APIRequestSchema, APIResponseSchema } from "./base.js";
-// TODO: Move to @artinet/types for cross-package consistency
 
 /**
  * Schema for find request validation.
