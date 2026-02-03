@@ -63,7 +63,9 @@ export const TaskStatusSchema = z.object({
     timestamp: z.iso.datetime({ offset: true }).optional(),
 });
 export type TaskStatus = z.output<typeof TaskStatusSchema>;
-
+export const isTaskStatus = (input: unknown): input is TaskStatus => {
+    return TaskStatusSchema.safeParse(input).success;
+};
 /**
  * Represents a task being processed by an agent.
  */
@@ -77,7 +79,9 @@ export const TaskSchema = z.object({
     kind: z.literal(KindSchema.enum['task']),
 });
 export type Task = z.output<typeof TaskSchema>;
-
+export const isTask = (input: unknown): input is Task => {
+    return TaskSchema.safeParse(input).success;
+};
 /**
  * Represents a status update event for a task, typically used in streaming scenarios.
  */
@@ -90,7 +94,9 @@ export const TaskStatusUpdateEventSchema = z.object({
     metadata: z.record(z.string(), z.unknown()).optional(),
 });
 export type TaskStatusUpdateEvent = z.output<typeof TaskStatusUpdateEventSchema>;
-
+export const isTaskStatusUpdateEvent = (input: unknown): input is TaskStatusUpdateEvent => {
+    return TaskStatusUpdateEventSchema.safeParse(input).success;
+};
 /**
  * Represents an artifact update event for a task, typically used in streaming scenarios.
  */
@@ -104,6 +110,9 @@ export const TaskArtifactUpdateEventSchema = z.object({
     metadata: z.record(z.string(), z.unknown()).optional(),
 });
 export type TaskArtifactUpdateEvent = z.output<typeof TaskArtifactUpdateEventSchema>;
+export const isTaskArtifactUpdateEvent = (input: unknown): input is TaskArtifactUpdateEvent => {
+    return TaskArtifactUpdateEventSchema.safeParse(input).success;
+};
 
 /**
  * @description Request to retrieve the current state of a task.
