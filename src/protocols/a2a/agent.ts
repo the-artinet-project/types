@@ -174,6 +174,11 @@ export const AgentCardSignatureSchema = z
 export type AgentCardSignature = z.output<typeof AgentCardSignatureSchema>;
 
 /**
+ * @description The supported version of the A2A protocol.
+ */
+export const SUPPORTED_PROTOCOL_VERSION = '0.3.0';
+
+/**
  * @description An AgentCard conveys key information about an agent's identity,
  * capabilities, skills, authentication requirements, and communication modalities.
  */
